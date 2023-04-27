@@ -36,7 +36,7 @@ namespace AndreTurismoAPIExterna.EnderecoService.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cidade");
+                    b.ToTable("Cidade", (string)null);
                 });
 
             modelBuilder.Entity("AndreTurismoAPIExterna.Models.Endereco", b =>
@@ -76,7 +76,7 @@ namespace AndreTurismoAPIExterna.EnderecoService.Migrations
 
                     b.HasIndex("CidadeId");
 
-                    b.ToTable("Endereco");
+                    b.ToTable("Endereco", (string)null);
                 });
 
             modelBuilder.Entity("AndreTurismoAPIExterna.Models.Endereco", b =>

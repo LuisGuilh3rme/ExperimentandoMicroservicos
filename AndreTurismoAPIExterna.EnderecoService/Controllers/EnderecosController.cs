@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AndreTurismoAPIExterna.EnderecoService.Data;
 using AndreTurismoAPIExterna.Models;
+using AndreTurismoAPIExterna.Models.DTO;
+using AndreTurismoAPIExterna.EnderecoService.Services;
 
 namespace AndreTurismoAPIExterna.EnderecoService.Controllers
 {
@@ -21,18 +23,25 @@ namespace AndreTurismoAPIExterna.EnderecoService.Controllers
             _context = context;
         }
 
-        // GET: api/Enderecoes
+        // GET: api/Enderecos
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Endereco>>> GetEndereco()
         {
-          if (_context.Endereco == null)
-          {
-              return NotFound();
-          }
+            if (_context.Endereco == null)
+            {
+                return NotFound();
+            }
             return await _context.Endereco.ToListAsync();
         }
 
-        // GET: api/Enderecoes/5
+        // GET: api/Enderecos
+        [HttpGet("{cep:length(8)}")]
+        public EnderecoDTO GetEnderecoByCep(string cep)
+        {
+            return CorreiosService.GetAddress(cep).Result;
+        }
+
+        // GET: api/Enderecos/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Endereco>> GetEndereco(int id)
         {
@@ -50,7 +59,7 @@ namespace AndreTurismoAPIExterna.EnderecoService.Controllers
             return endereco;
         }
 
-        // PUT: api/Enderecoes/5
+        // PUT: api/Enderecos/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutEndereco(int id, Endereco endereco)
@@ -81,11 +90,14 @@ namespace AndreTurismoAPIExterna.EnderecoService.Controllers
             return NoContent();
         }
 
-        // POST: api/Enderecoes
+        // POST: api/Enderecos
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Endereco>> PostEndereco(Endereco endereco)
+        [HttpPost("{CEP:length(8)}, {numero:int}")]
+        public async Task<ActionResult<Endereco>> PostEndereco(string CEP, int numero, Endereco endereco)
         {
+            endereco.CEP = CEP;
+            endereco.Numero = numero;
+
           if (_context.Endereco == null)
           {
               return Problem("Entity set 'AndreTurismoAPIExternaEnderecoServiceContext.Endereco'  is null.");
@@ -96,7 +108,7 @@ namespace AndreTurismoAPIExterna.EnderecoService.Controllers
             return CreatedAtAction("GetEndereco", new { id = endereco.Id }, endereco);
         }
 
-        // DELETE: api/Enderecoes/5
+        // DELETE: api/Enderecos/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEndereco(int id)
         {

@@ -15,5 +15,7 @@ namespace AndreTurismoAPIExterna.EnderecoService.Data
         }
 
         public DbSet<AndreTurismoAPIExterna.Models.Endereco> Endereco { get; set; } = default!;
+
+        public DbSet<AndreTurismoAPIExterna.Models.Cidade>? Cidade { get; set; }
     }
 }
