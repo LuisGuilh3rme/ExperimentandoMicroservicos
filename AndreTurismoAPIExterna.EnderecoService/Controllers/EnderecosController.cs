@@ -101,17 +101,14 @@ namespace AndreTurismoAPIExterna.EnderecoService.Controllers
 
             EnderecoDTO enderecoDTO = GetEnderecoByCep(cep);
 
-            Cidade cidade = new Cidade();
-            cidade.Nome = enderecoDTO.Cidade;
-            cidade.Id = new CidadeService().InserirCidade(cidade);
-
             endereco.Bairro = enderecoDTO.Bairro;
             endereco.Logradouro = enderecoDTO.Logradouro;
             endereco.Complemento = enderecoDTO.Complemento;
             endereco.DataCadastro = DateTime.Now;
-            endereco.Cidade = cidade;
+            endereco.Cidade.Nome = enderecoDTO.Cidade;
 
-            endereco.Id = new EnderecoLocalService().InserirEndereco(endereco);
+            _context.Endereco.Add(endereco);
+            await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetEndereco", new { id = endereco.Id }, endereco);
         }
