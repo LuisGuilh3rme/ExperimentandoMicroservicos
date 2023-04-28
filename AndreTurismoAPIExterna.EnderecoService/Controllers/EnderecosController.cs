@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using AndreTurismoAPIExterna.EnderecoService.Data;
+﻿using AndreTurismoAPIExterna.EnderecoService.Data;
+using AndreTurismoAPIExterna.EnderecoService.Services;
 using AndreTurismoAPIExterna.Models;
 using AndreTurismoAPIExterna.Models.DTO;
-using AndreTurismoAPIExterna.EnderecoService.Services;
-using AndreTurismoAPIExterna.Repositories;
+using AndreTurismoAPIExterna.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AndreTurismoAPIExterna.EnderecoService.Controllers
 {
@@ -108,7 +103,7 @@ namespace AndreTurismoAPIExterna.EnderecoService.Controllers
 
             Cidade cidade = new Cidade();
             cidade.Nome = enderecoDTO.Cidade;
-            cidade.Id = new TurismoRepository().InserirCidade(cidade);
+            cidade.Id = new CidadeService().InserirCidade(cidade);
 
             endereco.Bairro = enderecoDTO.Bairro;
             endereco.Logradouro = enderecoDTO.Logradouro;
@@ -116,7 +111,7 @@ namespace AndreTurismoAPIExterna.EnderecoService.Controllers
             endereco.DataCadastro = DateTime.Now;
             endereco.Cidade = cidade;
 
-            endereco.Id = new TurismoRepository().InserirEndereco(endereco);
+            endereco.Id = new EnderecoLocalService().InserirEndereco(endereco);
 
             return CreatedAtAction("GetEndereco", new { id = endereco.Id }, endereco);
         }

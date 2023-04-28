@@ -5,25 +5,11 @@ namespace AndreTurismoAPIExterna.Services
 {
     public class TurismoService
     {
-
-        public void AtualizarCampo(int id, string tabela, string campo, string atualizarString)
+        public void AtualizarCampo (int id, string tabela, string campo, string valor)
         {
-            new TurismoRepository().AtualizarCampo(id, tabela, campo, atualizarString);
+            TurismoRepository.AtualizarCampo(id, tabela, campo, valor);
         }
 
-        public void RemoverPacote(int id)
-        {
-            new TurismoRepository().RemoverPacote(id);
-        }
-
-        public bool Inserir(Pacote pacote)
-        {
-            return new TurismoRepository().Inserir(pacote);
-        }
-
-        public List<Pacote> FindAll()
-        {
-            return new TurismoRepository().FindAll();
-        }
+        public List<Pacote> EncontrarTudo() => TurismoRepository.EncontrarTudo();
     }
 }

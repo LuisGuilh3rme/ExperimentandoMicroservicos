@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using AndreTurismoAPIExterna.EnderecoService.Data;
+using AndreTurismoAPIExterna.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using AndreTurismoAPIExterna.EnderecoService.Data;
-using AndreTurismoAPIExterna.Models;
 
 namespace AndreTurismoAPIExterna.EnderecoService.Controllers
 {
