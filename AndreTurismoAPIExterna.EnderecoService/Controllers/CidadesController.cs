@@ -50,52 +50,6 @@ namespace AndreTurismoAPIExterna.EnderecoService.Controllers
             return cidade;
         }
 
-        // PUT: api/Cidades/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutCidade(int id, Cidade cidade)
-        {
-            if (id != cidade.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(cidade).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CidadeExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/Cidades
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Cidade>> PostCidade(Cidade cidade)
-        {
-          if (_context.Cidade == null)
-          {
-              return Problem("Entity set 'AndreTurismoAPIExternaEnderecoServiceContext.Cidade'  is null.");
-          }
-            _context.Cidade.Add(cidade);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetCidade", new { id = cidade.Id }, cidade);
-        }
-
         // DELETE: api/Cidades/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCidade(int id)

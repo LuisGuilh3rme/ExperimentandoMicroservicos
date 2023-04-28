@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AndreTurismoAPIExterna.Models\AndreTurismoAPIExterna.Models.csproj" />
+    <ProjectReference Include="..\AndreTurismoAPIExterna.Repositories\AndreTurismoAPIExterna.Repositories.csproj" />
   </ItemGroup>
 
 </Project>

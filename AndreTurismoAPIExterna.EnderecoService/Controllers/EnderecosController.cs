@@ -9,6 +9,7 @@ using AndreTurismoAPIExterna.EnderecoService.Data;
 using AndreTurismoAPIExterna.Models;
 using AndreTurismoAPIExterna.Models.DTO;
 using AndreTurismoAPIExterna.EnderecoService.Services;
+using AndreTurismoAPIExterna.Repositories;
 
 namespace AndreTurismoAPIExterna.EnderecoService.Controllers
 {
@@ -45,10 +46,10 @@ namespace AndreTurismoAPIExterna.EnderecoService.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Endereco>> GetEndereco(int id)
         {
-          if (_context.Endereco == null)
-          {
-              return NotFound();
-          }
+            if (_context.Endereco == null)
+            {
+                return NotFound();
+            }
             var endereco = await _context.Endereco.FindAsync(id);
 
             if (endereco == null)
@@ -92,18 +93,30 @@ namespace AndreTurismoAPIExterna.EnderecoService.Controllers
 
         // POST: api/Enderecos
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost("{CEP:length(8)}, {numero:int}")]
-        public async Task<ActionResult<Endereco>> PostEndereco(string CEP, int numero, Endereco endereco)
+        [HttpPost("{cep:length(8)}, {numero:int}")]
+        public async Task<ActionResult<Endereco>> PostEndereco(string cep, int numero, Endereco endereco)
         {
-            endereco.CEP = CEP;
+            endereco.CEP = cep;
             endereco.Numero = numero;
 
-          if (_context.Endereco == null)
-          {
-              return Problem("Entity set 'AndreTurismoAPIExternaEnderecoServiceContext.Endereco'  is null.");
-          }
-            _context.Endereco.Add(endereco);
-            await _context.SaveChangesAsync();
+            if (_context.Endereco == null)
+            {
+                return Problem("Entity set 'AndreTurismoAPIExternaEnderecoServiceContext.Endereco'  is null.");
+            }
+
+            EnderecoDTO enderecoDTO = GetEnderecoByCep(cep);
+
+            Cidade cidade = new Cidade();
+            cidade.Nome = enderecoDTO.Cidade;
+            cidade.Id = new TurismoRepository().InserirCidade(cidade);
+
+            endereco.Bairro = enderecoDTO.Bairro;
+            endereco.Logradouro = enderecoDTO.Logradouro;
+            endereco.Complemento = enderecoDTO.Complemento;
+            endereco.DataCadastro = DateTime.Now;
+            endereco.Cidade = cidade;
+
+            endereco.Id = new TurismoRepository().InserirEndereco(endereco);
 
             return CreatedAtAction("GetEndereco", new { id = endereco.Id }, endereco);
         }

@@ -9,7 +9,7 @@ namespace AndreTurismoAPIExterna.Repositories
 {
     public class TurismoRepository : ITurismoRepository
     {
-        private string _connection = @"Server=(localdb)\MSSQLLocalDB; Integrated Security=true; AttachDbFileName=C:\Database\17-04\turismo.mdf";
+        private string _connection = @"Server=(localdb)\MSSQLLocalDB; Integrated Security=true; AttachDbFileName=C:\Users\adm\AndreTurismoAPIExterna.EnderecoService.Data.mdf";
         private readonly string _identity = "SELECT CAST(scope_identity() AS INT)";
         public int InserirCidade(Cidade cidade)
         {
@@ -18,6 +18,7 @@ namespace AndreTurismoAPIExterna.Repositories
             sb.Append(_identity);
 
             SqlConnection db = new SqlConnection(_connection);
+            db.Open();
             int id = Convert.ToInt32(db.ExecuteScalar(sb.ToString(), cidade));
             db.Close();
 
