@@ -3,6 +3,8 @@ using AndreTurismoAPIExterna.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using AndreTurismoAPIExterna.Services;
+using System.Net;
+using System.Runtime.ConstrainedExecution;
 
 namespace AndreTurismoAPIExterna.Controllers
 {
@@ -38,15 +40,8 @@ namespace AndreTurismoAPIExterna.Controllers
         [HttpPut("{id}, {numero:int}")]
         public async Task<ActionResult> PutEndereco(int id, int numero, Endereco endereco)
         {
-            try
-            {
-                _endereco.UpdateAddress(id, numero, endereco);
-            }
-            catch
-            {
-                return NotFound();
-            }
-            return NoContent();
+            HttpStatusCode code = await _endereco.UpdateAddress(id, numero, endereco);
+            return StatusCode((int)code);
         }
 
         
@@ -55,38 +50,19 @@ namespace AndreTurismoAPIExterna.Controllers
         [HttpPost("{cep:length(8)}, {numero:int}")]
         public async Task<ActionResult> PostEndereco(string cep, int numero, Endereco endereco)
         {
-            try
-            {
-                _endereco.PostAddress(cep, numero, endereco);
-            }
-            catch
-            {
-                return BadRequest();
-            }
-            return NoContent();
+            HttpStatusCode code = await _endereco.PostAddress(cep, numero, endereco);
+            return StatusCode((int)code);
         }
         
-        /*
+        
         // DELETE: api/Enderecos/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEndereco(int id)
+        public async Task<ActionResult> DeleteEndereco(int id)
         {
-            if (_context.Endereco == null)
-            {
-                return NotFound();
-            }
-            var endereco = await _context.Endereco.FindAsync(id);
-            if (endereco == null)
-            {
-                return NotFound();
-            }
-
-            _context.Endereco.Remove(endereco);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            HttpStatusCode code = await _endereco.DeleteAddress(id);
+            return StatusCode((int)code);
         }
-        */
+
     }
 
 }

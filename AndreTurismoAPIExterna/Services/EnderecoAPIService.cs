@@ -5,6 +5,7 @@ using System.Text.Unicode;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks.Dataflow;
+using System.Net;
 
 namespace AndreTurismoAPIExterna.Services
 {
@@ -43,33 +44,25 @@ namespace AndreTurismoAPIExterna.Services
                 throw;
             }
         }
-        
-        public async void UpdateAddress(int id, int numero, Endereco endereco)
+
+        public async Task<HttpStatusCode> UpdateAddress(int id, int numero, Endereco endereco)
         {
-            try
-            {
-                HttpContent httpContent = new StringContent(JsonConvert.SerializeObject(endereco), Encoding.UTF8, "application/JSON");
-                HttpResponseMessage resposta = await cliente.PutAsync("https://localhost:5001/api/Endereco/" + id + ", " + numero, httpContent);
-                resposta.EnsureSuccessStatusCode();
-            }
-            catch (HttpRequestException e)
-            {
-                throw;
-            }
+            HttpContent httpContent = new StringContent(JsonConvert.SerializeObject(endereco), Encoding.UTF8, "application/JSON");
+            HttpResponseMessage resposta = await cliente.PutAsync("https://localhost:5001/api/Endereco/" + id + ", " + numero, httpContent);
+            return resposta.StatusCode;
         }
 
-        public async void PostAddress(string cep, int numero, Endereco endereco)
+        public async Task<HttpStatusCode> PostAddress(string cep, int numero, Endereco endereco)
         {
-            try
-            {
-                HttpContent httpContent = new StringContent(JsonConvert.SerializeObject(endereco), Encoding.UTF8, "application/JSON");
-                HttpResponseMessage resposta = await cliente.PostAsync("https://localhost:5001/api/Endereco/" + cep + ", " + numero, httpContent);
-                resposta.EnsureSuccessStatusCode();
-            }
-            catch (HttpRequestException e)
-            {
-                throw;
-            }
+            HttpContent httpContent = new StringContent(JsonConvert.SerializeObject(endereco), Encoding.UTF8, "application/JSON");
+            HttpResponseMessage resposta = await cliente.PostAsync("https://localhost:5001/api/Endereco/" + cep + ", " + numero, httpContent);
+            return resposta.StatusCode;
+        }
+
+        public async Task<HttpStatusCode> DeleteAddress(int id)
+        {
+            HttpResponseMessage resposta = await cliente.DeleteAsync("https://localhost:5001/api/Endereco/" + id);
+            return resposta.StatusCode;
         }
     }
 }
