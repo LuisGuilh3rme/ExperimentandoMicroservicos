@@ -35,12 +35,12 @@ namespace AndreTurismoAPIExterna.Controllers
 
         // PUT: api/Enderecos/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<ActionResult> PutEndereco(int id, Endereco endereco)
+        [HttpPut("{id}, {numero:int}")]
+        public async Task<ActionResult> PutEndereco(int id, int numero, Endereco endereco)
         {
             try
             {
-                _endereco.UpdateAddress(id, endereco);
+                _endereco.UpdateAddress(id, numero, endereco);
             }
             catch
             {

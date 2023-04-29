@@ -44,12 +44,12 @@ namespace AndreTurismoAPIExterna.Services
             }
         }
         
-        public async void UpdateAddress(int id, Endereco endereco)
+        public async void UpdateAddress(int id, int numero, Endereco endereco)
         {
             try
             {
                 HttpContent httpContent = new StringContent(JsonConvert.SerializeObject(endereco), Encoding.UTF8, "application/JSON");
-                HttpResponseMessage resposta = await cliente.PutAsync("https://localhost:5001/api/Endereco/" + id, httpContent);
+                HttpResponseMessage resposta = await cliente.PutAsync("https://localhost:5001/api/Endereco/" + id + ", " + numero, httpContent);
                 resposta.EnsureSuccessStatusCode();
             }
             catch (HttpRequestException e)

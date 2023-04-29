@@ -57,13 +57,15 @@ namespace AndreTurismoAPIExterna.EnderecoService.Controllers
 
         // PUT: api/Enderecos/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutEndereco(int id, Endereco endereco)
+        [HttpPut("{id}, {numero:int}")]
+        public async Task<IActionResult> PutEndereco(int id, int numero, Endereco endereco)
         {
-            if (id != endereco.Id)
-            {
-                return BadRequest();
-            }
+            Endereco? enderecoExistente = await _context.Endereco.FindAsync(id);
+            
+            if (enderecoExistente == null) return NotFound();
+
+            endereco = enderecoExistente;
+            endereco.Numero = numero;
 
             _context.Entry(endereco).State = EntityState.Modified;
 
