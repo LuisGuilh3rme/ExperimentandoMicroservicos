@@ -1,7 +1,22 @@
-﻿namespace AndreTurismoAPIExterna.Models
+﻿using AndreTurismoAPIExterna.Models.DTO;
+
+namespace AndreTurismoAPIExterna.Models
 {
     public class Endereco
     {
+        public Endereco() { }
+        public Endereco(EnderecoDTO enderecoDTO)
+        {
+            Id = enderecoDTO.Id;
+            Logradouro = enderecoDTO.Logradouro;
+            Numero = 0;
+            Bairro = enderecoDTO.Bairro;
+            CEP = enderecoDTO.CEP;
+            Complemento = enderecoDTO.Complemento;
+            Cidade.Nome = enderecoDTO.Cidade;
+            DataCadastro = DateTime.Now;
+        }
+
         public readonly static string INSERT = $"INSERT INTO Endereco (Logradouro, Numero, Bairro, CEP, Complemento, CidadeId, DataCadastro) VALUES (@Logradouro, @Numero, @Bairro, @CEP, @Complemento, @Cidade, @DataCadastro);";
         public int Id { get; set; }
         public string Logradouro { get; set; }

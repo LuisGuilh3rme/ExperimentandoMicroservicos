@@ -55,5 +55,36 @@ namespace AndreTurismoAPIExterna.Repositories
 
             return hotel;
         }
+
+        public static List<Hotel> ListarHotels()
+        {
+            List<Hotel> list = new List<Hotel>();
+            StringBuilder sb = new StringBuilder();
+            sb.Append("SELECT Id, Nome, Id_Endereco, Data_Cadastro, Valor FROM Hotel");
+
+            SqlConnection db = new SqlConnection(_connection);
+            db.Open();
+
+            IDataReader dr = db.ExecuteReader(sb.ToString());
+
+
+            while (dr.Read())
+            {
+                Hotel hotel = new Hotel();
+
+                hotel.Id = Convert.ToInt32(dr["Id"]);
+                hotel.Nome = Convert.ToString(dr["Nome"]);
+                hotel.DataCadastro = DateTime.Parse(dr["Data_Cadastro"].ToString());
+                hotel.Valor = Convert.ToDecimal(dr["Valor"]);
+
+                int idEndereco = Convert.ToInt32(dr["Id_Endereco"]);
+                hotel.Endereco = EnderecoRepository.RetornarEndereco(idEndereco);
+                list.Add(hotel);
+            }
+            dr.Close();
+            db.Close();
+
+            return list;
+        }
     }
 }

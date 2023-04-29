@@ -10,11 +10,11 @@ namespace AndreTurismoAPIExterna.EnderecoService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EnderecosController : ControllerBase
+    public class EnderecoController : ControllerBase
     {
         private readonly AndreTurismoAPIExternaEnderecoServiceContext _context;
 
-        public EnderecosController(AndreTurismoAPIExternaEnderecoServiceContext context)
+        public EnderecoController(AndreTurismoAPIExternaEnderecoServiceContext context)
         {
             _context = context;
         }
@@ -27,12 +27,12 @@ namespace AndreTurismoAPIExterna.EnderecoService.Controllers
             {
                 return NotFound();
             }
-            return await _context.Endereco.ToListAsync();
+            return await _context.Endereco.Include(e => e.Cidade).ToListAsync();
         }
 
         // GET: api/Enderecos
         [HttpGet("{cep:length(8)}")]
-        public EnderecoDTO GetEnderecoByCep(string cep)
+        public ActionResult<EnderecoDTO> GetEnderecoByCep(string cep)
         {
             return CorreiosService.GetAddress(cep).Result;
         }
@@ -45,7 +45,7 @@ namespace AndreTurismoAPIExterna.EnderecoService.Controllers
             {
                 return NotFound();
             }
-            var endereco = await _context.Endereco.FindAsync(id);
+            var endereco = await _context.Endereco.Include(e => e.Cidade).Where(e => e.Id == id).FirstOrDefaultAsync();
 
             if (endereco == null)
             {
@@ -99,7 +99,7 @@ namespace AndreTurismoAPIExterna.EnderecoService.Controllers
                 return Problem("Entity set 'AndreTurismoAPIExternaEnderecoServiceContext.Endereco'  is null.");
             }
 
-            EnderecoDTO enderecoDTO = GetEnderecoByCep(cep);
+            EnderecoDTO enderecoDTO = CorreiosService.GetAddress(cep).Result;
 
             endereco.Bairro = enderecoDTO.Bairro;
             endereco.Logradouro = enderecoDTO.Logradouro;
