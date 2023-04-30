@@ -3,7 +3,6 @@ using AndreTurismoAPIExterna.EnderecoService.Data;
 using AndreTurismoAPIExterna.EnderecoService.Services;
 using AndreTurismoAPIExterna.Models;
 using AndreTurismoAPIExterna.Models.DTO;
-using AndreTurismoAPIExterna.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

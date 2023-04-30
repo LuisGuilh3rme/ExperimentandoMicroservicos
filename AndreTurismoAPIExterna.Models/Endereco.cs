@@ -1,4 +1,5 @@
-﻿using AndreTurismoAPIExterna.Models.DTO;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using AndreTurismoAPIExterna.Models.DTO;
 
 namespace AndreTurismoAPIExterna.Models
 {
@@ -17,7 +18,6 @@ namespace AndreTurismoAPIExterna.Models
             DataCadastro = DateTime.Now;
         }
 
-        public readonly static string INSERT = $"INSERT INTO Endereco (Logradouro, Numero, Bairro, CEP, Complemento, CidadeId, DataCadastro) VALUES (@Logradouro, @Numero, @Bairro, @CEP, @Complemento, @Cidade, @DataCadastro);";
         public int Id { get; set; }
         public string Logradouro { get; set; }
         public int Numero { get; set; }
