@@ -25,7 +25,7 @@ namespace AndreTurismoAPIExterna.Services
             }
             catch (HttpRequestException e)
             {
-                throw;
+                return new List<Endereco>();
             }
         }
 
@@ -41,7 +41,7 @@ namespace AndreTurismoAPIExterna.Services
             }
             catch (HttpRequestException e)
             {
-                throw;
+                return null;
             }
         }
 

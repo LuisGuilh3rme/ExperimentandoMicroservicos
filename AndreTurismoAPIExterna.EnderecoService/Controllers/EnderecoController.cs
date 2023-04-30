@@ -1,4 +1,5 @@
-﻿using AndreTurismoAPIExterna.EnderecoService.Data;
+﻿using System.Runtime.ConstrainedExecution;
+using AndreTurismoAPIExterna.EnderecoService.Data;
 using AndreTurismoAPIExterna.EnderecoService.Services;
 using AndreTurismoAPIExterna.Models;
 using AndreTurismoAPIExterna.Models.DTO;
@@ -60,13 +61,21 @@ namespace AndreTurismoAPIExterna.EnderecoService.Controllers
         [HttpPut("{id}, {numero:int}")]
         public async Task<IActionResult> PutEndereco(int id, int numero, Endereco endereco)
         {
-            Endereco? enderecoExistente = await _context.Endereco.FindAsync(id);
-            
-            if (enderecoExistente == null) return NotFound();
+            if (endereco.CEP == null)
+            {
+                Endereco? enderecoExistente = await _context.Endereco.FindAsync(id);
+                if (enderecoExistente == null) return NotFound();
 
-            endereco = enderecoExistente;
-            endereco.Numero = numero;
+                endereco = enderecoExistente;
+                endereco.Numero = numero;
+            }
 
+            else
+            {
+                EnderecoDTO enderecoDTO = CorreiosService.GetAddress(endereco.CEP).Result;
+                endereco = new Endereco(enderecoDTO);
+                endereco.Numero = numero;
+            }
             _context.Entry(endereco).State = EntityState.Modified;
 
             try

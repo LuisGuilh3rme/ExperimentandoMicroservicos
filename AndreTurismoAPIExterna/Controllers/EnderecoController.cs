@@ -24,14 +24,18 @@ namespace AndreTurismoAPIExterna.Controllers
         [HttpGet]
         public ActionResult<List<Endereco>> GetEndereco()
         {
-            return _endereco.GetAddress().Result;
+            List<Endereco> enderecos = _endereco.GetAddress().Result;
+            if (enderecos.Count == 0) return NoContent();
+            return enderecos;
         }
 
         // GET: api/Enderecos
         [HttpGet("{id}")]
         public ActionResult<Endereco> GetEnderecoById(int id)
         {
-            return _endereco.GetAddressById(id).Result;
+            Endereco endereco = _endereco.GetAddressById(id).Result;
+            if (endereco == null) return NotFound();
+            return endereco;
         }
 
 
