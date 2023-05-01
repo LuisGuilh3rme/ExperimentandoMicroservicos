@@ -1,6 +1,9 @@
-using AndreTurismoAPIExterna.Services;
-
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using AndreTurismoAPIExterna.PacoteService.Data;
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<AndreTurismoAPIExternaPacoteServiceContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("AndreTurismoAPIExternaPacoteServiceContext") ?? throw new InvalidOperationException("Connection string 'AndreTurismoAPIExternaPacoteServiceContext' not found.")));
 
 // Add services to the container.
 
@@ -8,12 +11,6 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-builder.Services.AddSingleton<EnderecoAPIService>();
-builder.Services.AddSingleton<ClienteAPIService>();
-builder.Services.AddSingleton<HotelAPIService>();
-builder.Services.AddSingleton<PassagemAPIService>();
-builder.Services.AddSingleton<PacoteAPIService>();
 
 var app = builder.Build();
 

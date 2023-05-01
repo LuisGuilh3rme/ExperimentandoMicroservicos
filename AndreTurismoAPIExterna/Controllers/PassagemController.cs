@@ -17,10 +17,10 @@ namespace AndreTurismoAPIExterna.Controllers
         private static ClienteAPIService _cliente;
         private static EnderecoAPIService _endereco;
 
-        public PassagemController(PassagemAPIService passagem, ClienteAPIService clienteAPI, EnderecoAPIService enderecoAPI)
+        public PassagemController(PassagemAPIService passagemAPI, ClienteAPIService clienteAPI, EnderecoAPIService enderecoAPI)
         {
 
-            _passagem = passagem;
+            _passagem = passagemAPI;
             _cliente = clienteAPI;
             _endereco = enderecoAPI;
         }
