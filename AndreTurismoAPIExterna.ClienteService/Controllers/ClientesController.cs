@@ -53,7 +53,7 @@ namespace AndreTurismoAPIExterna.ClienteService.Controllers
         // PUT: api/Clientes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCliente(int id, Cliente cliente)
+        public async Task<ActionResult<Cliente>> PutCliente(int id, Cliente cliente)
         {
             if (id != cliente.Id)
             {
@@ -61,7 +61,7 @@ namespace AndreTurismoAPIExterna.ClienteService.Controllers
             }
 
             _context.Update(cliente.Endereco);
-            _context.Update(cliente);
+            _context.Entry<Cliente>(cliente).State = EntityState.Modified;
 
             try
             {
@@ -79,7 +79,7 @@ namespace AndreTurismoAPIExterna.ClienteService.Controllers
                 }
             }
 
-            return NoContent();
+            return cliente;
         }
 
         // POST: api/Clientes
@@ -95,7 +95,7 @@ namespace AndreTurismoAPIExterna.ClienteService.Controllers
             _context.Cliente.Add(cliente);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCliente", new { id = cliente.Id }, cliente);
+            return cliente;
         }
 
         // DELETE: api/Clientes/5
@@ -115,7 +115,7 @@ namespace AndreTurismoAPIExterna.ClienteService.Controllers
             _context.Cliente.Remove(cliente);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok();
         }
 
         private bool ClienteExists(int id)

@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AndreTurismoAPIExterna.ClienteService\AndreTurismoAPIExterna.ClienteService.csproj" />
     <ProjectReference Include="..\AndreTurismoAPIExterna.EnderecoService\AndreTurismoAPIExterna.EnderecoService.csproj" />
   </ItemGroup>
 
