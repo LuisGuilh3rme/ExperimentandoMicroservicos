@@ -47,6 +47,7 @@ namespace AndreTurismoAPIExterna.Controllers
         {
             Endereco endereco = _endereco.EncontrarPorId(cliente.Endereco.Id).Result;
             if (endereco == null) return NotFound();
+            cliente.Endereco = endereco;
 
             HttpStatusCode code = await _cliente.Atualizar(id, cliente);
             return StatusCode((int)code);
@@ -60,6 +61,7 @@ namespace AndreTurismoAPIExterna.Controllers
         {
             Endereco endereco = _endereco.EncontrarPorId(cliente.Endereco.Id).Result;
             if (endereco == null) return NotFound();
+            cliente.Endereco = endereco;
 
             HttpStatusCode code = await _cliente.Enviar(cliente);
             return StatusCode((int)code);

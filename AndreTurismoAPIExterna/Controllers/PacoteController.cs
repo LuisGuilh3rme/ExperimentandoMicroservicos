@@ -50,14 +50,17 @@ namespace AndreTurismoAPIExterna.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> PutPacote(int id, Pacote pacote)
         {
-            Passagem passagem = _passagem.EncontrarPorId(id).Result;
+            Passagem passagem = _passagem.EncontrarPorId(pacote.Passagem.Id).Result;
             if (passagem == null) return NotFound();
+            pacote.Passagem = passagem;
 
             Hotel hotel = _hotel.EncontrarPorId(pacote.Hotel.Id).Result;
             if (hotel == null) return NotFound();
+            pacote.Hotel = hotel;
 
             Cliente cliente = _cliente.EncontrarPorId(pacote.Cliente.Id).Result;
             if (cliente == null) return NotFound();
+            pacote.Cliente = cliente;
 
             HttpStatusCode code = await _pacote.Atualizar(id, pacote);
             return StatusCode((int)code);
@@ -71,12 +74,15 @@ namespace AndreTurismoAPIExterna.Controllers
         {
             Passagem passagem = _passagem.EncontrarPorId(pacote.Passagem.Id).Result;
             if (passagem == null) return NotFound();
+            pacote.Passagem = passagem;
 
             Hotel hotel = _hotel.EncontrarPorId(pacote.Hotel.Id).Result;
             if (hotel == null) return NotFound();
+            pacote.Hotel = hotel;
 
             Cliente cliente = _cliente.EncontrarPorId(pacote.Cliente.Id).Result;
             if (cliente == null) return NotFound();
+            pacote.Cliente = cliente;
 
             HttpStatusCode code = await _pacote.Enviar(pacote);
             return StatusCode((int)code);
