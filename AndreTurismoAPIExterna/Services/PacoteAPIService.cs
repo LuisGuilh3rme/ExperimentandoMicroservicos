@@ -43,6 +43,8 @@ namespace AndreTurismoAPIExterna.Services
 
         public async Task<HttpStatusCode> UpdatePackage(int id, Pacote pacote)
         {
+            pacote = ClearPackageId(pacote);
+
             HttpContent httpContent = new StringContent(JsonConvert.SerializeObject(pacote), Encoding.UTF8, "application/JSON");
             HttpResponseMessage resposta = await cliente.PutAsync("https://localhost:5005/api/Pacotes/" + id, httpContent);
             return resposta.StatusCode;
@@ -50,6 +52,8 @@ namespace AndreTurismoAPIExterna.Services
 
         public async Task<HttpStatusCode> PostPackage(Pacote pacote)
         {
+            pacote = ClearPackageId(pacote);
+
             HttpContent httpContent = new StringContent(JsonConvert.SerializeObject(pacote), Encoding.UTF8, "application/JSON");
             HttpResponseMessage resposta = await cliente.PostAsync("https://localhost:5005/api/Pacotes/", httpContent);
             return resposta.StatusCode;
@@ -59,6 +63,28 @@ namespace AndreTurismoAPIExterna.Services
         {
             HttpResponseMessage resposta = await cliente.DeleteAsync("https://localhost:5005/api/Pacotes/" + id);
             return resposta.StatusCode;
+        }
+
+        private Pacote ClearPackageId (Pacote pacote)
+        {
+            pacote.Passagem.Id = 0;
+            pacote.Passagem.Origem.Id = 0;
+            pacote.Passagem.Origem.Cidade.Id = 0;
+            pacote.Passagem.Destino.Id = 0;
+            pacote.Passagem.Destino.Cidade.Id = 0;
+            pacote.Passagem.Cliente.Id = 0;
+            pacote.Passagem.Cliente.Endereco.Id = 0;
+            pacote.Passagem.Cliente.Endereco.Cidade.Id = 0;
+
+            pacote.Hotel.Id = 0;
+            pacote.Hotel.Endereco.Id = 0;
+            pacote.Hotel.Endereco.Cidade.Id = 0;
+
+            pacote.Cliente.Id = 0;
+            pacote.Cliente.Endereco.Id = 0;
+            pacote.Cliente.Endereco.Cidade.Id = 0;
+
+            return pacote;
         }
     }
 }

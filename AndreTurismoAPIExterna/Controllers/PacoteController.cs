@@ -52,28 +52,12 @@ namespace AndreTurismoAPIExterna.Controllers
         {
             Passagem passagem = _passagem.GetTicketById(id).Result;
             if (passagem == null) return NotFound();
-            passagem.Origem.Id = 0;
-            passagem.Origem.Cidade.Id = 0;
-            passagem.Destino.Id = 0;
-            passagem.Destino.Cidade.Id = 0;
-            passagem.Cliente.Id = 0;
-            passagem.Cliente.Endereco.Id = 0;
-            passagem.Cliente.Endereco.Cidade.Id = 0;
-            pacote.Passagem = passagem;
 
             Hotel hotel = _hotel.GetHotelById(pacote.Hotel.Id).Result;
             if (hotel == null) return NotFound();
-            hotel.Id = 0;
-            hotel.Endereco.Id = 0;
-            hotel.Endereco.Cidade.Id = 0;
-            pacote.Hotel = hotel;
 
             Cliente cliente = _cliente.GetClientById(pacote.Cliente.Id).Result;
             if (cliente == null) return NotFound();
-            cliente.Id = 0;
-            cliente.Endereco.Id = 0;
-            cliente.Endereco.Cidade.Id = 0;
-            pacote.Cliente = cliente;
 
             HttpStatusCode code = await _pacote.UpdatePackage(id, pacote);
             return StatusCode((int)code);
@@ -87,29 +71,12 @@ namespace AndreTurismoAPIExterna.Controllers
         {
             Passagem passagem = _passagem.GetTicketById(pacote.Passagem.Id).Result;
             if (passagem == null) return NotFound();
-            passagem.Id = 0;
-            passagem.Origem.Id = 0;
-            passagem.Origem.Cidade.Id = 0;
-            passagem.Destino.Id = 0;
-            passagem.Destino.Cidade.Id = 0;
-            passagem.Cliente.Id = 0;
-            passagem.Cliente.Endereco.Id = 0;
-            passagem.Cliente.Endereco.Cidade.Id = 0;
-            pacote.Passagem = passagem;
 
             Hotel hotel = _hotel.GetHotelById(pacote.Hotel.Id).Result;
             if (hotel == null) return NotFound();
-            hotel.Id = 0;
-            hotel.Endereco.Id = 0;
-            hotel.Endereco.Cidade.Id = 0;
-            pacote.Hotel = hotel;
 
             Cliente cliente = _cliente.GetClientById(pacote.Cliente.Id).Result;
             if (cliente == null) return NotFound();
-            cliente.Id = 0;
-            cliente.Endereco.Id = 0;
-            cliente.Endereco.Cidade.Id = 0;
-            pacote.Cliente = cliente;
 
             HttpStatusCode code = await _pacote.PostPackage(pacote);
             return StatusCode((int)code);
