@@ -48,7 +48,7 @@ namespace AndreTurismoAPIExterna.Controllers
         // PUT: api/Pacote/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<ActionResult> PutPacote(int id, Pacote pacote)
+        public async Task<ActionResult> PutPacote(Guid id, Pacote pacote)
         {
             Passagem passagem = _passagem.EncontrarPorId(pacote.Passagem.Id).Result;
             if (passagem == null) return NotFound();

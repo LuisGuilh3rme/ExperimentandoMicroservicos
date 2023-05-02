@@ -24,11 +24,9 @@ namespace AndreTurismoAPIExterna.PassagemService.Migrations
 
             modelBuilder.Entity("AndreTurismoAPIExterna.Models.Cidade", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -41,17 +39,15 @@ namespace AndreTurismoAPIExterna.PassagemService.Migrations
 
             modelBuilder.Entity("AndreTurismoAPIExterna.Models.Cliente", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DataCadastro")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("EnderecoId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("EnderecoId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -70,11 +66,9 @@ namespace AndreTurismoAPIExterna.PassagemService.Migrations
 
             modelBuilder.Entity("AndreTurismoAPIExterna.Models.Endereco", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Bairro")
                         .IsRequired()
@@ -84,8 +78,8 @@ namespace AndreTurismoAPIExterna.PassagemService.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CidadeId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CidadeId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Complemento")
                         .IsRequired()
@@ -110,23 +104,21 @@ namespace AndreTurismoAPIExterna.PassagemService.Migrations
 
             modelBuilder.Entity("AndreTurismoAPIExterna.Models.Passagem", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("ClienteId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ClienteId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("Data")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("DestinoId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("DestinoId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("OrigemId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("OrigemId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Valor")
                         .HasColumnType("decimal(18,2)");

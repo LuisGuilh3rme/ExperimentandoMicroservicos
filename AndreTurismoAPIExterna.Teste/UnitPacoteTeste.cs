@@ -51,7 +51,7 @@ namespace AndreTurismoAPIExterna.Teste
             {
                 var contexto = new AndreTurismoAPIExternaPacoteServiceContext(opcoes);
                 PacotesController controlador = new PacotesController(contexto);
-                Pacote? pacote = controlador.GetPacote(1).Result.Value;
+                Pacote? pacote = controlador.GetPacote(Guid.NewGuid()).Result.Value;
 
                 Assert.Equal("Hotel 1", pacote.Hotel.Nome);
                 Assert.Equal("Rua 1", pacote.Passagem.Origem.Logradouro);
@@ -89,15 +89,16 @@ namespace AndreTurismoAPIExterna.Teste
                 var contexto = new AndreTurismoAPIExternaPacoteServiceContext(opcoes);
                 PacotesController controlador = new PacotesController(contexto);
 
+                Guid guid = Guid.NewGuid();
                 Endereco origem = new Endereco { Logradouro = "Rua 8", CEP = "14945112", Numero = 10, Bairro = "Bairro 4", Complemento = "null", Cidade = new Cidade() { Nome = "Cidade1" } };
                 Endereco destino = new Endereco { Logradouro = "Rua 9", CEP = "14945112", Numero = 11, Bairro = "Bairro 3", Complemento = "null", Cidade = new Cidade() { Nome = "Cidade2" } };
                 Cliente cliente = new Cliente { Nome = "Marquinhos", Telefone = "4002-8922", Endereco = origem, DataCadastro = DateTime.Now };
                 Passagem passagem = new Passagem { Origem = destino, Destino = origem, Cliente = cliente, Data = DateTime.Now, Valor = 200M };
                 Hotel hotel = new Hotel { Nome = "Hotel Lorem Ipsum", Endereco = origem, DataCadastro = DateTime.Now, Valor = 100 };
-                Pacote pacote = new Pacote { Id = 1, Hotel = hotel, Passagem = passagem, DataCadastro = DateTime.Now, Valor = 123.456M, Cliente = cliente };
+                Pacote pacote = new Pacote { Id = guid, Hotel = hotel, Passagem = passagem, DataCadastro = DateTime.Now, Valor = 123.456M, Cliente = cliente };
 
 
-                var retorno = controlador.PutPacote(1, pacote).Result.Value;
+                var retorno = controlador.PutPacote(guid, pacote).Result.Value;
                 Assert.Equal("Marquinhos", retorno.Cliente.Nome);
             }
         }
@@ -111,7 +112,7 @@ namespace AndreTurismoAPIExterna.Teste
                 var contexto = new AndreTurismoAPIExternaPacoteServiceContext(opcoes);
                 PacotesController controlador = new PacotesController(contexto);
 
-                var retorno = controlador.DeletePacote(1).Result;
+                var retorno = controlador.DeletePacote(Guid.NewGuid()).Result;
                 Assert.IsType<OkResult>(retorno);
             }
         }

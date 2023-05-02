@@ -48,7 +48,7 @@ namespace AndreTurismoAPIExterna.Teste
             {
                 var contexto = new AndreTurismoAPIExternaClienteServiceContext(opcoes);
                 ClientesController controlador = new ClientesController(contexto);
-                Cliente cliente = controlador.GetCliente(2).Result.Value;
+                Cliente cliente = controlador.GetCliente(Guid.NewGuid()).Result.Value;
                 Assert.Equal("Dolor Sit Amet", cliente.Nome);
                 Assert.Equal("Rua 1", cliente.Endereco.Logradouro);
             }
@@ -80,10 +80,11 @@ namespace AndreTurismoAPIExterna.Teste
                 var contexto = new AndreTurismoAPIExternaClienteServiceContext(opcoes);
                 ClientesController controlador = new ClientesController(contexto);
 
+                Guid guid = Guid.NewGuid();
                 Endereco endereco = new Endereco { Logradouro = "Rua Guilherme", CEP = "14945112", Numero = 10, Bairro = "Bairro 3", Complemento = "null", Cidade = new Cidade() { Nome = "Cidade3" } };
-                Cliente cliente = new Cliente { Id = 1, Nome = "Guilherme", Telefone = "4002-8922", Endereco = endereco, DataCadastro = DateTime.Now };
+                Cliente cliente = new Cliente { Id = guid, Nome = "Guilherme", Telefone = "4002-8922", Endereco = endereco, DataCadastro = DateTime.Now };
 
-                var retorno = controlador.PutCliente(1, cliente).Result.Value;
+                var retorno = controlador.PutCliente(guid, cliente).Result.Value;
                 Assert.Equal("Guilherme", retorno.Nome);
             }
         }
@@ -97,7 +98,7 @@ namespace AndreTurismoAPIExterna.Teste
                 var contexto = new AndreTurismoAPIExternaClienteServiceContext(opcoes);
                 ClientesController controlador = new ClientesController(contexto);
 
-                var retorno = controlador.DeleteCliente(1).Result;
+                var retorno = controlador.DeleteCliente(Guid.NewGuid()).Result;
                 Assert.IsType<OkResult>(retorno);
             }
         }

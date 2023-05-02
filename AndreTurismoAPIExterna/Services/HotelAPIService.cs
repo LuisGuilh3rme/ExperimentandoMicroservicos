@@ -25,7 +25,7 @@ namespace AndreTurismoAPIExterna.Services
             }
         }
 
-        public async Task<Hotel> EncontrarPorId(int id)
+        public async Task<Hotel> EncontrarPorId(Guid id)
         {
             try
             {
@@ -41,7 +41,7 @@ namespace AndreTurismoAPIExterna.Services
             }
         }
 
-        public async Task<HttpStatusCode> Atualizar(int id, Hotel hotel)
+        public async Task<HttpStatusCode> Atualizar(Guid id, Hotel hotel)
         {
             hotel = RemoverIds(hotel);
 
@@ -59,7 +59,7 @@ namespace AndreTurismoAPIExterna.Services
             return resposta.StatusCode;
         }
 
-        public async Task<HttpStatusCode> Deletar(int id)
+        public async Task<HttpStatusCode> Deletar(Guid id)
         {
             HttpResponseMessage resposta = await cliente.DeleteAsync("https://localhost:5003/api/Hotels/" + id);
             return resposta.StatusCode;
@@ -67,8 +67,6 @@ namespace AndreTurismoAPIExterna.Services
 
         private Hotel RemoverIds (Hotel hotel)
         {
-            hotel.Endereco.Id = 0;
-            hotel.Endereco.Cidade.Id = 0;
 
             return hotel;
         }

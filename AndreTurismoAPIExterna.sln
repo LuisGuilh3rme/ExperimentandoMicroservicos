@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AndreTurismoAPIExterna.Pass
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AndreTurismoAPIExterna.PacoteService", "AndreTurismoAPIExterna.PacoteService\AndreTurismoAPIExterna.PacoteService.csproj", "{07C751D6-CDDE-490C-A01B-AE6B15A536CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AndreTurismoAPIExterna.Teste", "AndreTurismoAPIExterna.Teste\AndreTurismoAPIExterna.Teste.csproj", "{5D9F68CA-6EE0-4B8E-A8FE-B5C6404ACEC7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AndreTurismoAPIExterna.Teste", "AndreTurismoAPIExterna.Teste\AndreTurismoAPIExterna.Teste.csproj", "{5D9F68CA-6EE0-4B8E-A8FE-B5C6404ACEC7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Global", "Global", "{3A569D79-278F-49AD-A63A-200C0EE07470}"
 EndProject

@@ -29,7 +29,7 @@ namespace AndreTurismoAPIExterna.EnderecoService.Controllers
 
         // GET: api/Cidades/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Cidade>> GetCidade(int id)
+        public async Task<ActionResult<Cidade>> GetCidade(Guid id)
         {
           if (_context.Cidade == null)
           {
@@ -47,7 +47,7 @@ namespace AndreTurismoAPIExterna.EnderecoService.Controllers
 
         // DELETE: api/Cidades/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCidade(int id)
+        public async Task<IActionResult> DeleteCidade(Guid id)
         {
             if (_context.Cidade == null)
             {
@@ -65,7 +65,7 @@ namespace AndreTurismoAPIExterna.EnderecoService.Controllers
             return NoContent();
         }
 
-        private bool CidadeExists(int id)
+        private bool CidadeExists(Guid id)
         {
             return (_context.Cidade?.Any(e => e.Id == id)).GetValueOrDefault();
         }

@@ -34,7 +34,7 @@ namespace AndreTurismoAPIExterna.HotelService.Controllers
 
         // GET: api/Hotels/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Hotel>> GetHotel(int id)
+        public async Task<ActionResult<Hotel>> GetHotel(Guid id)
         {
           if (_context.Hotel == null)
           {
@@ -53,7 +53,7 @@ namespace AndreTurismoAPIExterna.HotelService.Controllers
         // PUT: api/Hotels/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<ActionResult<Hotel>> PutHotel(int id, Hotel hotel)
+        public async Task<ActionResult<Hotel>> PutHotel(Guid id, Hotel hotel)
         {
             if (id != hotel.Id)
             {
@@ -99,7 +99,7 @@ namespace AndreTurismoAPIExterna.HotelService.Controllers
 
         // DELETE: api/Hotels/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteHotel(int id)
+        public async Task<IActionResult> DeleteHotel(Guid id)
         {
             if (_context.Hotel == null)
             {
@@ -117,7 +117,7 @@ namespace AndreTurismoAPIExterna.HotelService.Controllers
             return Ok();
         }
 
-        private bool HotelExists(int id)
+        private bool HotelExists(Guid id)
         {
             return (_context.Hotel?.Any(e => e.Id == id)).GetValueOrDefault();
         }

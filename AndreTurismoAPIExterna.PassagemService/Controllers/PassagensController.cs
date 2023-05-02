@@ -38,7 +38,7 @@ namespace AndreTurismoAPIExterna.PassagemService.Controllers
 
         // GET: api/Passagens/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Passagem>> GetPassagem(int id)
+        public async Task<ActionResult<Passagem>> GetPassagem(Guid id)
         {
           if (_context.Passagem == null)
           {
@@ -60,7 +60,7 @@ namespace AndreTurismoAPIExterna.PassagemService.Controllers
         // PUT: api/Passagens/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<ActionResult<Passagem>> PutPassagem(int id, Passagem passagem)
+        public async Task<ActionResult<Passagem>> PutPassagem(Guid id, Passagem passagem)
         {
             if (id != passagem.Id)
             {
@@ -109,7 +109,7 @@ namespace AndreTurismoAPIExterna.PassagemService.Controllers
 
         // DELETE: api/Passagens/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePassagem(int id)
+        public async Task<IActionResult> DeletePassagem(Guid id)
         {
             if (_context.Passagem == null)
             {
@@ -127,7 +127,7 @@ namespace AndreTurismoAPIExterna.PassagemService.Controllers
             return Ok();
         }
 
-        private bool PassagemExists(int id)
+        private bool PassagemExists(Guid id)
         {
             return (_context.Passagem?.Any(e => e.Id == id)).GetValueOrDefault();
         }

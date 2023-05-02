@@ -9,13 +9,12 @@ namespace AndreTurismoAPIExterna.EnderecoService.Data
 {
     public class AndreTurismoAPIExternaEnderecoServiceContext : DbContext
     {
-        public AndreTurismoAPIExternaEnderecoServiceContext (DbContextOptions<AndreTurismoAPIExternaEnderecoServiceContext> options)
+        public AndreTurismoAPIExternaEnderecoServiceContext(DbContextOptions<AndreTurismoAPIExternaEnderecoServiceContext> options)
             : base(options)
         {
         }
 
         public DbSet<AndreTurismoAPIExterna.Models.Endereco> Endereco { get; set; } = default!;
-
-        public DbSet<AndreTurismoAPIExterna.Models.Cidade>? Cidade { get; set; }
+        public DbSet<AndreTurismoAPIExterna.Models.Cidade> Cidade { get; set; } = default!;
     }
 }

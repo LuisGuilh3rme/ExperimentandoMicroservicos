@@ -32,7 +32,7 @@ namespace AndreTurismoAPIExterna.Controllers
 
         // GET: api/Enderecos
         [HttpGet("{id}")]
-        public ActionResult<Hotel> GetHotelById(int id)
+        public ActionResult<Hotel> GetHotelById(Guid id)
         {
             Hotel hotel = _hotel.EncontrarPorId(id).Result;
             if (hotel == null) return NotFound();
@@ -43,7 +43,7 @@ namespace AndreTurismoAPIExterna.Controllers
         // PUT: api/Enderecos/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<ActionResult> PutHotel(int id, Hotel hotel)
+        public async Task<ActionResult> PutHotel(Guid id, Hotel hotel)
         {
             Endereco endereco = _endereco.EncontrarPorId(hotel.Endereco.Id).Result;
             if (endereco == null) return NotFound();
@@ -70,7 +70,7 @@ namespace AndreTurismoAPIExterna.Controllers
         
         // DELETE: api/Enderecos/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteHotel(int id)
+        public async Task<ActionResult> DeleteHotel(Guid id)
         {
             HttpStatusCode code = await _hotel.Deletar(id);
             return StatusCode((int)code);

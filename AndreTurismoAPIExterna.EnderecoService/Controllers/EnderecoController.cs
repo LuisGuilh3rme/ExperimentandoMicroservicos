@@ -39,7 +39,7 @@ namespace AndreTurismoAPIExterna.EnderecoService.Controllers
 
         // GET: api/Enderecos/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Endereco>> GetEndereco(int id)
+        public async Task<ActionResult<Endereco>> GetEndereco(Guid id)
         {
             if (_context.Endereco == null)
             {
@@ -58,7 +58,7 @@ namespace AndreTurismoAPIExterna.EnderecoService.Controllers
         // PUT: api/Enderecos/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}, {numero:int}")]
-        public async Task<ActionResult<Endereco>> PutEndereco(int id, int numero, Endereco endereco)
+        public async Task<ActionResult<Endereco>> PutEndereco(Guid id, int numero, Endereco endereco)
         {
             Endereco? enderecoExistente = await _context.Endereco.FindAsync(id);
             if (enderecoExistente == null) return NotFound();
@@ -148,7 +148,7 @@ namespace AndreTurismoAPIExterna.EnderecoService.Controllers
             return Ok();
         }
 
-        private bool EnderecoExists(int id)
+        private bool EnderecoExists(Guid id)
         {
             return (_context.Endereco?.Any(e => e.Id == id)).GetValueOrDefault();
         }

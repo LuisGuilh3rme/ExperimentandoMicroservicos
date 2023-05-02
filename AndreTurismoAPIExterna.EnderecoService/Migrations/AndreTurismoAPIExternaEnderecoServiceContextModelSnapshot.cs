@@ -24,11 +24,9 @@ namespace AndreTurismoAPIExterna.EnderecoService.Migrations
 
             modelBuilder.Entity("AndreTurismoAPIExterna.Models.Cidade", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -36,16 +34,14 @@ namespace AndreTurismoAPIExterna.EnderecoService.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cidade", (string)null);
+                    b.ToTable("Cidade");
                 });
 
             modelBuilder.Entity("AndreTurismoAPIExterna.Models.Endereco", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Bairro")
                         .IsRequired()
@@ -55,8 +51,8 @@ namespace AndreTurismoAPIExterna.EnderecoService.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CidadeId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CidadeId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Complemento")
                         .IsRequired()
@@ -76,7 +72,7 @@ namespace AndreTurismoAPIExterna.EnderecoService.Migrations
 
                     b.HasIndex("CidadeId");
 
-                    b.ToTable("Endereco", (string)null);
+                    b.ToTable("Endereco");
                 });
 
             modelBuilder.Entity("AndreTurismoAPIExterna.Models.Endereco", b =>

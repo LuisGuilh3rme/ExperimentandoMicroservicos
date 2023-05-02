@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace AndreTurismoAPIExterna.HotelService.Migrations
+namespace AndreTurismoAPIExterna.ClienteService.Migrations
 {
     public partial class InitialCreate : Migration
     {
@@ -13,8 +13,7 @@ namespace AndreTurismoAPIExterna.HotelService.Migrations
                 name: "Cidade",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Nome = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -26,14 +25,13 @@ namespace AndreTurismoAPIExterna.HotelService.Migrations
                 name: "Endereco",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Logradouro = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Numero = table.Column<int>(type: "int", nullable: false),
                     Bairro = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CEP = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Complemento = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CidadeId = table.Column<int>(type: "int", nullable: false),
+                    CidadeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DataCadastro = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -48,21 +46,20 @@ namespace AndreTurismoAPIExterna.HotelService.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Hotel",
+                name: "Cliente",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EnderecoId = table.Column<int>(type: "int", nullable: false),
-                    DataCadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Valor = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    Telefone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EnderecoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DataCadastro = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Hotel", x => x.Id);
+                    table.PrimaryKey("PK_Cliente", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Hotel_Endereco_EnderecoId",
+                        name: "FK_Cliente_Endereco_EnderecoId",
                         column: x => x.EnderecoId,
                         principalTable: "Endereco",
                         principalColumn: "Id",
@@ -70,20 +67,20 @@ namespace AndreTurismoAPIExterna.HotelService.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Cliente_EnderecoId",
+                table: "Cliente",
+                column: "EnderecoId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Endereco_CidadeId",
                 table: "Endereco",
                 column: "CidadeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Hotel_EnderecoId",
-                table: "Hotel",
-                column: "EnderecoId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Hotel");
+                name: "Cliente");
 
             migrationBuilder.DropTable(
                 name: "Endereco");

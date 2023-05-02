@@ -51,7 +51,7 @@ namespace AndreTurismoAPIExterna.Teste
             {
                 var contexto = new AndreTurismoAPIExternaPassagemServiceContext(opcoes);
                 PassagensController controlador = new PassagensController(contexto);
-                Passagem passagem = controlador.GetPassagem(2).Result.Value;
+                Passagem passagem = controlador.GetPassagem(Guid.NewGuid()).Result.Value;
                 Assert.Equal("Dolor Sit Amet", passagem.Cliente.Nome);
                 Assert.Equal("Rua 1", passagem.Cliente.Endereco.Logradouro);
             }
@@ -85,12 +85,13 @@ namespace AndreTurismoAPIExterna.Teste
                 var contexto = new AndreTurismoAPIExternaPassagemServiceContext(opcoes);
                 PassagensController controlador = new PassagensController(contexto);
 
+                Guid guid = Guid.NewGuid();
                 Endereco origem = new Endereco { Logradouro = "Rua 20", CEP = "14945112", Numero = 10, Bairro = "Bairro 4", Complemento = "null", Cidade = new Cidade() { Nome = "Cidade1" } };
                 Endereco destino = new Endereco { Logradouro = "Rua 1", CEP = "14945112", Numero = 11, Bairro = "Bairro 3", Complemento = "null", Cidade = new Cidade() { Nome = "Cidade2" } };
                 Cliente cliente = new Cliente { Nome = "Sabia", Telefone = "4002-8922", Endereco = origem, DataCadastro = DateTime.Now };
-                Passagem passagem = new Passagem { Id = 1, Origem = destino, Destino = origem, Cliente = cliente, Data = DateTime.Now, Valor = 200M };
+                Passagem passagem = new Passagem { Id = guid, Origem = destino, Destino = origem, Cliente = cliente, Data = DateTime.Now, Valor = 200M };
 
-                var retorno = controlador.PutPassagem(1, passagem).Result.Value;
+                var retorno = controlador.PutPassagem(guid, passagem).Result.Value;
                 Assert.Equal("Rua 1", retorno.Origem.Logradouro);
             }
         }
@@ -104,7 +105,7 @@ namespace AndreTurismoAPIExterna.Teste
                 var contexto = new AndreTurismoAPIExternaPassagemServiceContext(opcoes);
                 PassagensController controlador = new PassagensController(contexto);
 
-                var retorno = controlador.DeletePassagem(1).Result;
+                var retorno = controlador.DeletePassagem(Guid.NewGuid()).Result;
                 Assert.IsType<OkResult>(retorno);
             }
         }

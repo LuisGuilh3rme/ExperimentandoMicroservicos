@@ -25,7 +25,7 @@ namespace AndreTurismoAPIExterna.Services
             }
         }
 
-        public async Task<Cliente> EncontrarPorId(int id)
+        public async Task<Cliente> EncontrarPorId(Guid id)
         {
             try
             {
@@ -41,7 +41,7 @@ namespace AndreTurismoAPIExterna.Services
             }
         }
 
-        public async Task<HttpStatusCode> Atualizar(int id, Cliente c)
+        public async Task<HttpStatusCode> Atualizar(Guid id, Cliente c)
         {
             c = RemoverIds(c);
 
@@ -59,7 +59,7 @@ namespace AndreTurismoAPIExterna.Services
             return resposta.StatusCode;
         }
 
-        public async Task<HttpStatusCode> Deletar(int id)
+        public async Task<HttpStatusCode> Deletar(Guid id)
         {
             HttpResponseMessage resposta = await cliente.DeleteAsync("https://localhost:5002/api/Clientes/" + id);
             return resposta.StatusCode;
@@ -67,9 +67,6 @@ namespace AndreTurismoAPIExterna.Services
 
         private Cliente RemoverIds (Cliente cliente)
         {
-            cliente.Endereco.Id = 0;
-            cliente.Endereco.Cidade.Id = 0;
-
             return cliente;
         }
     }

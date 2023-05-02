@@ -41,7 +41,7 @@ namespace AndreTurismoAPIExterna.PacoteService.Controllers
 
         // GET: api/Pacotes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Pacote>> GetPacote(int id)
+        public async Task<ActionResult<Pacote>> GetPacote(Guid id)
         {
           if (_context.Pacote == null)
           {
@@ -66,7 +66,7 @@ namespace AndreTurismoAPIExterna.PacoteService.Controllers
         // PUT: api/Pacotes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<ActionResult<Pacote>> PutPacote(int id, Pacote pacote)
+        public async Task<ActionResult<Pacote>> PutPacote(Guid id, Pacote pacote)
         {
             if (id != pacote.Id)
             {
@@ -120,7 +120,7 @@ namespace AndreTurismoAPIExterna.PacoteService.Controllers
 
         // DELETE: api/Pacotes/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePacote(int id)
+        public async Task<IActionResult> DeletePacote(Guid id)
         {
             if (_context.Pacote == null)
             {
@@ -138,7 +138,7 @@ namespace AndreTurismoAPIExterna.PacoteService.Controllers
             return Ok();
         }
 
-        private bool PacoteExists(int id)
+        private bool PacoteExists(Guid id)
         {
             return (_context.Pacote?.Any(e => e.Id == id)).GetValueOrDefault();
         }

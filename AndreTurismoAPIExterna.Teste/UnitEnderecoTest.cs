@@ -48,7 +48,7 @@ namespace AndreTurismoAPIExterna.Teste
             {
                 var contexto = new AndreTurismoAPIExternaEnderecoServiceContext(opcoes);
                 EnderecoController controlador = new EnderecoController(contexto);
-                Endereco endereco = controlador.GetEndereco(2).Result.Value;
+                Endereco endereco = controlador.GetEndereco(Guid.NewGuid()).Result.Value;
                 Assert.Equal("Rua 2", endereco.Logradouro);
             }
         }
@@ -75,7 +75,7 @@ namespace AndreTurismoAPIExterna.Teste
             {
                 var contexto = new AndreTurismoAPIExternaEnderecoServiceContext(opcoes);
                 EnderecoController controlador = new EnderecoController(contexto);
-                Endereco endereco = new Endereco { Id = 1, CEP = "04961990", Numero = 5, Cidade = new Cidade() };
+                Endereco endereco = new Endereco { Id = Guid.NewGuid(), CEP = "04961990", Numero = 5, Cidade = new Cidade() };
                 var retorno = controlador.PutEndereco(endereco.Id, endereco.Numero, endereco).Result.Value;
                 Assert.Equal(endereco.CEP, retorno.CEP);
             }

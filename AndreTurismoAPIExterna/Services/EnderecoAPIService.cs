@@ -29,7 +29,7 @@ namespace AndreTurismoAPIExterna.Services
             }
         }
 
-        public async Task<Endereco> EncontrarPorId(int id)
+        public async Task<Endereco> EncontrarPorId(Guid id)
         {
             try
             {
@@ -45,7 +45,7 @@ namespace AndreTurismoAPIExterna.Services
             }
         }
 
-        public async Task<HttpStatusCode> Atualizar(int id, int numero, Endereco endereco)
+        public async Task<HttpStatusCode> Atualizar(Guid id, int numero, Endereco endereco)
         {
             HttpContent httpContent = new StringContent(JsonConvert.SerializeObject(endereco), Encoding.UTF8, "application/JSON");
             HttpResponseMessage resposta = await cliente.PutAsync("https://localhost:5001/api/Endereco/" + id + ", " + numero, httpContent);
@@ -59,7 +59,7 @@ namespace AndreTurismoAPIExterna.Services
             return resposta.StatusCode;
         }
 
-        public async Task<HttpStatusCode> Deletar(int id)
+        public async Task<HttpStatusCode> Deletar(Guid id)
         {
             HttpResponseMessage resposta = await cliente.DeleteAsync("https://localhost:5001/api/Endereco/" + id);
             return resposta.StatusCode;

@@ -34,7 +34,7 @@ namespace AndreTurismoAPIExterna.ClienteService.Controllers
 
         // GET: api/Clientes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Cliente>> GetCliente(int id)
+        public async Task<ActionResult<Cliente>> GetCliente(Guid id)
         {
             if (_context.Cliente == null)
             {
@@ -53,7 +53,7 @@ namespace AndreTurismoAPIExterna.ClienteService.Controllers
         // PUT: api/Clientes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<ActionResult<Cliente>> PutCliente(int id, Cliente cliente)
+        public async Task<ActionResult<Cliente>> PutCliente(Guid id, Cliente cliente)
         {
             if (id != cliente.Id)
             {
@@ -87,7 +87,6 @@ namespace AndreTurismoAPIExterna.ClienteService.Controllers
         [HttpPost]
         public async Task<ActionResult<Cliente>> PostCliente(Cliente cliente)
         {
-            cliente.Endereco.Id = 0;
             if (_context.Cliente == null)
             {
                 return Problem("Entity set 'AndreTurismoAPIExternaClienteServiceContext.Cliente'  is null.");
@@ -100,7 +99,7 @@ namespace AndreTurismoAPIExterna.ClienteService.Controllers
 
         // DELETE: api/Clientes/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCliente(int id)
+        public async Task<IActionResult> DeleteCliente(Guid id)
         {
             if (_context.Cliente == null)
             {
@@ -118,7 +117,7 @@ namespace AndreTurismoAPIExterna.ClienteService.Controllers
             return Ok();
         }
 
-        private bool ClienteExists(int id)
+        private bool ClienteExists(Guid id)
         {
             return (_context.Cliente?.Any(e => e.Id == id)).GetValueOrDefault();
         }

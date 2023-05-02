@@ -36,7 +36,7 @@ namespace AndreTurismoAPIExterna.Controllers
 
         // GET: api/Passagem
         [HttpGet("{id}")]
-        public ActionResult<Passagem> GetPassagemById(int id)
+        public ActionResult<Passagem> GetPassagemById(Guid id)
         {
             Passagem passagem = _passagem.EncontrarPorId(id).Result;
             if (passagem == null) return NotFound();
@@ -47,7 +47,7 @@ namespace AndreTurismoAPIExterna.Controllers
         // PUT: api/Enderecos/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<ActionResult> PutPassagem(int id, Passagem passagem)
+        public async Task<ActionResult> PutPassagem(Guid id, Passagem passagem)
         {
             Endereco endereco;
 
@@ -94,7 +94,7 @@ namespace AndreTurismoAPIExterna.Controllers
         
         // DELETE: api/Enderecos/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeletePassagem(int id)
+        public async Task<ActionResult> DeletePassagem(Guid id)
         {
             HttpStatusCode code = await _passagem.Deletar(id);
             return StatusCode((int)code);

@@ -41,7 +41,7 @@ namespace AndreTurismoAPIExterna.Services
             }
         }
 
-        public async Task<HttpStatusCode> Atualizar(int id, Pacote pacote)
+        public async Task<HttpStatusCode> Atualizar(Guid id, Pacote pacote)
         {
             pacote = RemoverIds(pacote);
 
@@ -67,23 +67,6 @@ namespace AndreTurismoAPIExterna.Services
 
         private Pacote RemoverIds (Pacote pacote)
         {
-            pacote.Passagem.Id = 0;
-            pacote.Passagem.Origem.Id = 0;
-            pacote.Passagem.Origem.Cidade.Id = 0;
-            pacote.Passagem.Destino.Id = 0;
-            pacote.Passagem.Destino.Cidade.Id = 0;
-            pacote.Passagem.Cliente.Id = 0;
-            pacote.Passagem.Cliente.Endereco.Id = 0;
-            pacote.Passagem.Cliente.Endereco.Cidade.Id = 0;
-
-            pacote.Hotel.Id = 0;
-            pacote.Hotel.Endereco.Id = 0;
-            pacote.Hotel.Endereco.Cidade.Id = 0;
-
-            pacote.Cliente.Id = 0;
-            pacote.Cliente.Endereco.Id = 0;
-            pacote.Cliente.Endereco.Cidade.Id = 0;
-
             return pacote;
         }
     }

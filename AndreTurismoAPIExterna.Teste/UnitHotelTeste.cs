@@ -48,7 +48,7 @@ namespace AndreTurismoAPIExterna.Teste
             {
                 var contexto = new AndreTurismoAPIExternaHotelServiceContext(opcoes);
                 HotelsController controlador = new HotelsController(contexto);
-                Hotel hotel = controlador.GetHotel(2).Result.Value;
+                Hotel hotel = controlador.GetHotel(Guid.NewGuid()).Result.Value;
                 Assert.Equal("Hotel 2", hotel.Nome);
                 Assert.Equal("Rua 1", hotel.Endereco.Logradouro);
             }
@@ -80,10 +80,11 @@ namespace AndreTurismoAPIExterna.Teste
                 var contexto = new AndreTurismoAPIExternaHotelServiceContext(opcoes);
                 HotelsController controlador = new HotelsController(contexto);
 
+                Guid guid = Guid.NewGuid();
                 Endereco endereco = new Endereco { Logradouro = "Rua Guilherme", CEP = "14945112", Numero = 10, Bairro = "Bairro 3", Complemento = "null", Cidade = new Cidade() { Nome = "Cidade3" } };
-                Hotel hotel = new Hotel { Id = 1, Nome = "Hotel Guilherme", Endereco = endereco, DataCadastro = DateTime.Now, Valor = 20M };
+                Hotel hotel = new Hotel { Id = guid, Nome = "Hotel Guilherme", Endereco = endereco, DataCadastro = DateTime.Now, Valor = 20M };
 
-                var retorno = controlador.PutHotel(1, hotel).Result.Value;
+                var retorno = controlador.PutHotel(guid, hotel).Result.Value;
                 Assert.Equal("Hotel Guilherme", retorno.Nome);
             }
         }
@@ -97,7 +98,7 @@ namespace AndreTurismoAPIExterna.Teste
                 var contexto = new AndreTurismoAPIExternaHotelServiceContext(opcoes);
                 HotelsController controlador = new HotelsController(contexto);
 
-                var retorno = controlador.DeleteHotel(1).Result;
+                var retorno = controlador.DeleteHotel(Guid.NewGuid()).Result;
                 Assert.IsType<OkResult>(retorno);
             }
         }
