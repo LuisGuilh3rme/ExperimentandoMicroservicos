@@ -1,8 +1,5 @@
-using Microsoft.EntityFrameworkCore;
 using AndreTurismoAPIExterna.ClienteService.Controllers;
 using AndreTurismoAPIExterna.ClienteService.Data;
-using AndreTurismoAPIExterna.Models;
-using Microsoft.AspNetCore.Mvc;
 
 namespace AndreTurismoAPIExterna.Teste
 {

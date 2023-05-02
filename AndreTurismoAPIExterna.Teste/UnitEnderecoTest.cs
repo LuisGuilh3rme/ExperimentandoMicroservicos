@@ -1,13 +1,5 @@
-using Microsoft.EntityFrameworkCore;
-using AndreTurismoAPIExterna.EnderecoService;
-using AndreTurismoAPIExterna.EnderecoService.Data;
-using System.Net;
-using Microsoft.Extensions.Options;
 using AndreTurismoAPIExterna.EnderecoService.Controllers;
-using Microsoft.AspNetCore.Mvc;
-using Xunit;
-using AndreTurismoAPIExterna.ClienteService.Controllers;
-using AndreTurismoAPIExterna.ClienteService.Data;
+using AndreTurismoAPIExterna.EnderecoService.Data;
 
 namespace AndreTurismoAPIExterna.Teste
 {
