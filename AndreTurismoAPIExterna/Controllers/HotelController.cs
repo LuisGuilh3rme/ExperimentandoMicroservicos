@@ -45,9 +45,8 @@ namespace AndreTurismoAPIExterna.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> PutHotel(Guid id, Hotel hotel)
         {
-            Endereco endereco = _endereco.EncontrarPorId(hotel.Endereco.Id).Result;
+            Endereco endereco = _endereco.EncontrarPorId(hotel.Endereco).Result;
             if (endereco == null) return NotFound();
-            hotel.Endereco = endereco;
 
             HttpStatusCode code = await _hotel.Atualizar(id, hotel);
             return StatusCode((int)code);
@@ -59,9 +58,8 @@ namespace AndreTurismoAPIExterna.Controllers
         [HttpPost]
         public async Task<ActionResult> PostHotel(Hotel hotel)
         {
-            Endereco endereco = _endereco.EncontrarPorId(hotel.Endereco.Id).Result;
+            Endereco endereco = _endereco.EncontrarPorId(hotel.Endereco).Result;
             if (endereco == null) return NotFound();
-            hotel.Endereco = endereco;
 
             HttpStatusCode code = await _hotel.Enviar(hotel);
             return StatusCode((int)code);

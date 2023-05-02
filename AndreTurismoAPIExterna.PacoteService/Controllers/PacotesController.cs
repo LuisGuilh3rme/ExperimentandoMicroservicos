@@ -31,11 +31,9 @@ namespace AndreTurismoAPIExterna.PacoteService.Controllers
               return NotFound();
           }
             return await _context.Pacote
-                .Include(p => p.Hotel).ThenInclude(h => h.Endereco).ThenInclude(e => e.Cidade)
-                .Include(p => p.Passagem).ThenInclude(p => p.Origem).ThenInclude(e => e.Cidade)
-                .Include(p => p.Passagem).ThenInclude(p => p.Destino).ThenInclude(e => e.Cidade)
-                .Include(p => p.Passagem).ThenInclude(p => p.Cliente).ThenInclude(c => c.Endereco).ThenInclude(e => e.Cidade)
-                .Include(p => p.Cliente).ThenInclude(c => c.Endereco).ThenInclude(e => e.Cidade)
+                .Include(p => p.Hotel)
+                .Include(p => p.Passagem)
+                .Include(p => p.Cliente)
                 .ToListAsync();
         }
 
@@ -48,11 +46,11 @@ namespace AndreTurismoAPIExterna.PacoteService.Controllers
               return NotFound();
           }
             var pacote = await _context.Pacote
-                .Include(p => p.Hotel).ThenInclude(h => h.Endereco).ThenInclude(e => e.Cidade)
-                .Include(p => p.Passagem).ThenInclude(p => p.Origem).ThenInclude(e => e.Cidade)
-                .Include(p => p.Passagem).ThenInclude(p => p.Destino).ThenInclude(e => e.Cidade)
-                .Include(p => p.Passagem).ThenInclude(p => p.Cliente).ThenInclude(c => c.Endereco).ThenInclude(e => e.Cidade)
-                .Include(p => p.Cliente).ThenInclude(c => c.Endereco).ThenInclude(e => e.Cidade)
+                .Include(p => p.Hotel)
+                .Include(p => p.Passagem)
+                .Include(p => p.Passagem)
+                .Include(p => p.Passagem)
+                .Include(p => p.Cliente)
                 .Where(p => p.Id == id).FirstOrDefaultAsync();
 
             if (pacote == null)

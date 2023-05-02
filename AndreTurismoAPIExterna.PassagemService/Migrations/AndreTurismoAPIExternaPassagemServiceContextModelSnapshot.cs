@@ -22,102 +22,22 @@ namespace AndreTurismoAPIExterna.PassagemService.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("AndreTurismoAPIExterna.Models.Cidade", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Cidade");
-                });
-
-            modelBuilder.Entity("AndreTurismoAPIExterna.Models.Cliente", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("DataCadastro")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("EnderecoId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Telefone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EnderecoId");
-
-                    b.ToTable("Cliente");
-                });
-
-            modelBuilder.Entity("AndreTurismoAPIExterna.Models.Endereco", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Bairro")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CEP")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("CidadeId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Complemento")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DataCadastro")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Logradouro")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Numero")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CidadeId");
-
-                    b.ToTable("Endereco");
-                });
-
             modelBuilder.Entity("AndreTurismoAPIExterna.Models.Passagem", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ClienteId")
+                    b.Property<Guid>("Cliente")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("Data")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("DestinoId")
+                    b.Property<Guid>("Destino")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("OrigemId")
+                    b.Property<Guid>("Origem")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Valor")
@@ -125,65 +45,7 @@ namespace AndreTurismoAPIExterna.PassagemService.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClienteId")
-                        .IsUnique();
-
-                    b.HasIndex("DestinoId")
-                        .IsUnique();
-
-                    b.HasIndex("OrigemId")
-                        .IsUnique();
-
                     b.ToTable("Passagem");
-                });
-
-            modelBuilder.Entity("AndreTurismoAPIExterna.Models.Cliente", b =>
-                {
-                    b.HasOne("AndreTurismoAPIExterna.Models.Endereco", "Endereco")
-                        .WithMany()
-                        .HasForeignKey("EnderecoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Endereco");
-                });
-
-            modelBuilder.Entity("AndreTurismoAPIExterna.Models.Endereco", b =>
-                {
-                    b.HasOne("AndreTurismoAPIExterna.Models.Cidade", "Cidade")
-                        .WithMany()
-                        .HasForeignKey("CidadeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Cidade");
-                });
-
-            modelBuilder.Entity("AndreTurismoAPIExterna.Models.Passagem", b =>
-                {
-                    b.HasOne("AndreTurismoAPIExterna.Models.Cliente", "Cliente")
-                        .WithOne()
-                        .HasForeignKey("AndreTurismoAPIExterna.Models.Passagem", "ClienteId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("AndreTurismoAPIExterna.Models.Endereco", "Destino")
-                        .WithOne()
-                        .HasForeignKey("AndreTurismoAPIExterna.Models.Passagem", "DestinoId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("AndreTurismoAPIExterna.Models.Endereco", "Origem")
-                        .WithOne()
-                        .HasForeignKey("AndreTurismoAPIExterna.Models.Passagem", "OrigemId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Cliente");
-
-                    b.Navigation("Destino");
-
-                    b.Navigation("Origem");
                 });
 #pragma warning restore 612, 618
         }

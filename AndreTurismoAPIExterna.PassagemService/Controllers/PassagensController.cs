@@ -30,9 +30,9 @@ namespace AndreTurismoAPIExterna.PassagemService.Controllers
           {
               return NotFound();
           }
-            return await _context.Passagem.Include(p => p.Origem).ThenInclude(o => o.Cidade)
-                .Include(p => p.Destino).ThenInclude(d => d.Cidade)
-                .Include(p => p.Cliente).ThenInclude(c => c.Endereco).ThenInclude(e => e.Cidade)
+            return await _context.Passagem.Include(p => p.Origem)
+                .Include(p => p.Destino)
+                .Include(p => p.Cliente)
                 .ToListAsync();
         }
 
@@ -44,9 +44,9 @@ namespace AndreTurismoAPIExterna.PassagemService.Controllers
           {
               return NotFound();
           }
-            Passagem? passagem = await _context.Passagem.Include(p => p.Origem).ThenInclude(o => o.Cidade)
-                .Include(p => p.Destino).ThenInclude(d => d.Cidade)
-                .Include(p => p.Cliente).ThenInclude(c => c.Endereco).ThenInclude(e => e.Cidade)
+            Passagem? passagem = await _context.Passagem.Include(p => p.Origem)
+                .Include(p => p.Destino)
+                .Include(p => p.Cliente)
                 .Where(p => p.Id == id).FirstOrDefaultAsync();
 
             if (passagem == null)

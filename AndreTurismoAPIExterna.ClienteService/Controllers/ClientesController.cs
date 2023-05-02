@@ -29,7 +29,7 @@ namespace AndreTurismoAPIExterna.ClienteService.Controllers
             {
                 return NotFound();
             }
-            return await _context.Cliente.Include(c => c.Endereco).ThenInclude(e => e.Cidade).ToListAsync();
+            return await _context.Cliente.Include(c => c.Endereco).ToListAsync();
         }
 
         // GET: api/Clientes/5
@@ -40,7 +40,7 @@ namespace AndreTurismoAPIExterna.ClienteService.Controllers
             {
                 return NotFound();
             }
-            var cliente = await _context.Cliente.Include(c => c.Endereco).ThenInclude(e => e.Cidade).Where(c => c.Id == id).FirstOrDefaultAsync();
+            var cliente = await _context.Cliente.Include(c => c.Endereco).Where(c => c.Id == id).FirstOrDefaultAsync();
 
             if (cliente == null)
             {

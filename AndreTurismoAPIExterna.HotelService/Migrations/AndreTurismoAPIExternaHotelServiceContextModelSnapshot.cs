@@ -22,59 +22,6 @@ namespace AndreTurismoAPIExterna.HotelService.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("AndreTurismoAPIExterna.Models.Cidade", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Cidade");
-                });
-
-            modelBuilder.Entity("AndreTurismoAPIExterna.Models.Endereco", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Bairro")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CEP")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("CidadeId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Complemento")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DataCadastro")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Logradouro")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Numero")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CidadeId");
-
-                    b.ToTable("Endereco");
-                });
-
             modelBuilder.Entity("AndreTurismoAPIExterna.Models.Hotel", b =>
                 {
                     b.Property<Guid>("Id")
@@ -84,7 +31,7 @@ namespace AndreTurismoAPIExterna.HotelService.Migrations
                     b.Property<DateTime>("DataCadastro")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("EnderecoId")
+                    b.Property<Guid>("Endereco")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Nome")
@@ -96,31 +43,7 @@ namespace AndreTurismoAPIExterna.HotelService.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EnderecoId");
-
                     b.ToTable("Hotel");
-                });
-
-            modelBuilder.Entity("AndreTurismoAPIExterna.Models.Endereco", b =>
-                {
-                    b.HasOne("AndreTurismoAPIExterna.Models.Cidade", "Cidade")
-                        .WithMany()
-                        .HasForeignKey("CidadeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Cidade");
-                });
-
-            modelBuilder.Entity("AndreTurismoAPIExterna.Models.Hotel", b =>
-                {
-                    b.HasOne("AndreTurismoAPIExterna.Models.Endereco", "Endereco")
-                        .WithMany()
-                        .HasForeignKey("EnderecoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Endereco");
                 });
 #pragma warning restore 612, 618
         }

@@ -19,10 +19,9 @@ namespace AndreTurismoAPIExterna.Teste
             // Inserindo dados no banco
             {
                 var contexto = new AndreTurismoAPIExternaHotelServiceContext(opcoes);
-                Endereco endereco = new Endereco { Logradouro = "Rua 1", CEP = "123456789", Bairro = "Bairro 1", Complemento = "null", Cidade = new Cidade() { Nome = "Cidade1" } };
 
-                contexto.Hotel.Add(new Hotel { Nome = "Hotel 1", Endereco = endereco, DataCadastro = DateTime.Now, Valor = 100});
-                contexto.Hotel.Add(new Hotel { Nome = "Hotel 2", Endereco = endereco, DataCadastro = DateTime.Now, Valor = 200});
+                contexto.Hotel.Add(new Hotel { Nome = "Hotel 1", Endereco = Guid.NewGuid(), DataCadastro = DateTime.Now, Valor = 100});
+                contexto.Hotel.Add(new Hotel { Nome = "Hotel 2", Endereco = Guid.NewGuid(), DataCadastro = DateTime.Now, Valor = 200});
                 contexto.SaveChanges();
             }
         }
@@ -50,7 +49,7 @@ namespace AndreTurismoAPIExterna.Teste
                 HotelsController controlador = new HotelsController(contexto);
                 Hotel hotel = controlador.GetHotel(Guid.NewGuid()).Result.Value;
                 Assert.Equal("Hotel 2", hotel.Nome);
-                Assert.Equal("Rua 1", hotel.Endereco.Logradouro);
+                Assert.Equal(Guid.NewGuid(), hotel.Endereco);
             }
         }
 
@@ -64,7 +63,7 @@ namespace AndreTurismoAPIExterna.Teste
                 HotelsController controlador = new HotelsController(contexto);
 
                 Endereco endereco = new Endereco { Logradouro = "Rua 2", CEP = "14945112", Numero = 22, Bairro = "Bairro 2", Complemento = "null", Cidade = new Cidade() { Nome = "Cidade2" } };
-                Hotel hotel = new Hotel { Nome = "Hotel 3", Endereco = endereco, DataCadastro = DateTime.Now, Valor = 1.99M };
+                Hotel hotel = new Hotel { Nome = "Hotel 3", Endereco = Guid.NewGuid(), DataCadastro = DateTime.Now, Valor = 1.99M };
 
                 Hotel? retorno = controlador.PostHotel(hotel).Result.Value;
                 Assert.Equal(1.99M, retorno.Valor);
@@ -81,8 +80,8 @@ namespace AndreTurismoAPIExterna.Teste
                 HotelsController controlador = new HotelsController(contexto);
 
                 Guid guid = Guid.NewGuid();
-                Endereco endereco = new Endereco { Logradouro = "Rua Guilherme", CEP = "14945112", Numero = 10, Bairro = "Bairro 3", Complemento = "null", Cidade = new Cidade() { Nome = "Cidade3" } };
-                Hotel hotel = new Hotel { Id = guid, Nome = "Hotel Guilherme", Endereco = endereco, DataCadastro = DateTime.Now, Valor = 20M };
+
+                Hotel hotel = new Hotel { Id = guid, Nome = "Hotel Guilherme", Endereco = Guid.NewGuid(), DataCadastro = DateTime.Now, Valor = 20M };
 
                 var retorno = controlador.PutHotel(guid, hotel).Result.Value;
                 Assert.Equal("Hotel Guilherme", retorno.Nome);

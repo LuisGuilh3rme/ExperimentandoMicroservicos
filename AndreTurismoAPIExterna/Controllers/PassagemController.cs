@@ -51,17 +51,14 @@ namespace AndreTurismoAPIExterna.Controllers
         {
             Endereco endereco;
 
-            endereco = _endereco.EncontrarPorId(passagem.Origem.Id).Result;
+            endereco = _endereco.EncontrarPorId(passagem.Origem).Result;
             if (endereco == null) return NotFound();
-            passagem.Origem = endereco;
             
-            endereco = _endereco.EncontrarPorId(passagem.Destino.Id).Result;
+            endereco = _endereco.EncontrarPorId(passagem.Destino).Result;
             if (endereco == null) return NotFound();
-            passagem.Destino = endereco;
 
-            Cliente cliente = _cliente.EncontrarPorId(passagem.Cliente.Id).Result;
+            Cliente cliente = _cliente.EncontrarPorId(passagem.Cliente).Result;
             if (cliente == null) return NotFound();
-            passagem.Cliente = cliente;
 
             HttpStatusCode code = await _passagem.Atualizar(id, passagem);
             return StatusCode((int)code);
@@ -75,17 +72,14 @@ namespace AndreTurismoAPIExterna.Controllers
         {
             Endereco endereco;
 
-            endereco = _endereco.EncontrarPorId(passagem.Origem.Id).Result;
+            endereco = _endereco.EncontrarPorId(passagem.Origem).Result;
             if (endereco == null) return NotFound();
-            passagem.Origem = endereco;
 
-            endereco = _endereco.EncontrarPorId(passagem.Destino.Id).Result;
+            endereco = _endereco.EncontrarPorId(passagem.Destino).Result;
             if (endereco == null) return NotFound();
-            passagem.Destino = endereco;
 
-            Cliente cliente = _cliente.EncontrarPorId(passagem.Cliente.Id).Result;
+            Cliente cliente = _cliente.EncontrarPorId(passagem.Cliente).Result;
             if (cliente == null) return NotFound();
-            passagem.Cliente = cliente;
 
             HttpStatusCode code = await _passagem.Enviar(passagem);
             return StatusCode((int)code);

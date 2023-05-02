@@ -19,13 +19,8 @@ namespace AndreTurismoAPIExterna.Teste
             // Inserindo dados no banco
             {
                 var contexto = new AndreTurismoAPIExternaPacoteServiceContext(opcoes);
-                Endereco origem = new Endereco { Logradouro = "Rua 1", CEP = "123456789", Bairro = "Bairro 1", Complemento = "null", Cidade = new Cidade() { Nome = "Cidade1" } };
-                Endereco destino = new Endereco { Logradouro = "Rua 2", CEP = "123456789", Bairro = "Bairro 2", Complemento = "sala 5", Cidade = new Cidade() { Nome = "Cidade2" } };
-                Cliente cliente = new Cliente { Nome = "Lorem Ipsum", Telefone = "4002-8922", Endereco = origem, DataCadastro = DateTime.Now };
-                Passagem passagem = new Passagem { Origem = origem, Destino = destino, Cliente = cliente, Data = DateTime.Now, Valor = 100M };
-                Hotel hotel = new Hotel { Nome = "Hotel 1", Endereco = origem, DataCadastro = DateTime.Now, Valor = 100 };
 
-                contexto.Pacote.Add(new Pacote { Hotel = hotel, Passagem = passagem, DataCadastro = DateTime.Now, Valor = 1000.259M, Cliente = cliente});
+                contexto.Pacote.Add(new Pacote { Hotel = Guid.NewGuid(), Passagem = Guid.NewGuid(), DataCadastro = DateTime.Now, Valor = 1000.259M, Cliente = Guid.NewGuid() });
                 contexto.SaveChanges();
             }
         }
@@ -53,8 +48,8 @@ namespace AndreTurismoAPIExterna.Teste
                 PacotesController controlador = new PacotesController(contexto);
                 Pacote? pacote = controlador.GetPacote(Guid.NewGuid()).Result.Value;
 
-                Assert.Equal("Hotel 1", pacote.Hotel.Nome);
-                Assert.Equal("Rua 1", pacote.Passagem.Origem.Logradouro);
+                Assert.Equal(Guid.NewGuid(), pacote.Hotel);
+                Assert.Equal(Guid.NewGuid(), pacote.Passagem);
                 Assert.Equal(1000.259M, pacote.Valor);
             }
         }
@@ -68,15 +63,10 @@ namespace AndreTurismoAPIExterna.Teste
                 var contexto = new AndreTurismoAPIExternaPacoteServiceContext(opcoes);
                 PacotesController controlador = new PacotesController(contexto);
 
-                Endereco origem = new Endereco { Logradouro = "Rua 20", CEP = "14945112", Numero = 10, Bairro = "Bairro 4", Complemento = "null", Cidade = new Cidade() { Nome = "Cidade1" } };
-                Endereco destino = new Endereco { Logradouro = "Rua 1", CEP = "14945112", Numero = 11, Bairro = "Bairro 3", Complemento = "null", Cidade = new Cidade() { Nome = "Cidade2" } };
-                Cliente cliente = new Cliente { Nome = "Consectur", Telefone = "4002-8922", Endereco = origem, DataCadastro = DateTime.Now };
-                Passagem passagem = new Passagem { Origem = origem, Destino = destino, Cliente = cliente, Data = DateTime.Now, Valor = 300M };
-                Hotel hotel = new Hotel { Nome = "Hotel 20", Endereco = origem, DataCadastro = DateTime.Now, Valor = 100 };
-                Pacote pacote = new Pacote { Hotel = hotel, Passagem = passagem, DataCadastro = DateTime.Now, Valor = 999.99M, Cliente = cliente };
+                Pacote pacote = new Pacote { Hotel = Guid.NewGuid(), Passagem = Guid.NewGuid(), DataCadastro = DateTime.Now, Valor = 999.99M, Cliente = Guid.NewGuid() };
 
                 Pacote? retorno = controlador.PostPacote(pacote).Result.Value;
-                Assert.Equal("Hotel 20", pacote.Hotel.Nome);
+                Assert.Equal(Guid.NewGuid(), pacote.Hotel);
             }
         }
 
@@ -90,16 +80,11 @@ namespace AndreTurismoAPIExterna.Teste
                 PacotesController controlador = new PacotesController(contexto);
 
                 Guid guid = Guid.NewGuid();
-                Endereco origem = new Endereco { Logradouro = "Rua 8", CEP = "14945112", Numero = 10, Bairro = "Bairro 4", Complemento = "null", Cidade = new Cidade() { Nome = "Cidade1" } };
-                Endereco destino = new Endereco { Logradouro = "Rua 9", CEP = "14945112", Numero = 11, Bairro = "Bairro 3", Complemento = "null", Cidade = new Cidade() { Nome = "Cidade2" } };
-                Cliente cliente = new Cliente { Nome = "Marquinhos", Telefone = "4002-8922", Endereco = origem, DataCadastro = DateTime.Now };
-                Passagem passagem = new Passagem { Origem = destino, Destino = origem, Cliente = cliente, Data = DateTime.Now, Valor = 200M };
-                Hotel hotel = new Hotel { Nome = "Hotel Lorem Ipsum", Endereco = origem, DataCadastro = DateTime.Now, Valor = 100 };
-                Pacote pacote = new Pacote { Id = guid, Hotel = hotel, Passagem = passagem, DataCadastro = DateTime.Now, Valor = 123.456M, Cliente = cliente };
+                Pacote pacote = new Pacote { Id = guid, Hotel = Guid.NewGuid(), Passagem = Guid.NewGuid(), DataCadastro = DateTime.Now, Valor = 123.456M, Cliente = Guid.NewGuid() };
 
 
                 var retorno = controlador.PutPacote(guid, pacote).Result.Value;
-                Assert.Equal("Marquinhos", retorno.Cliente.Nome);
+                Assert.Equal(Guid.NewGuid(), retorno.Cliente);
             }
         }
 

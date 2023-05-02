@@ -50,17 +50,14 @@ namespace AndreTurismoAPIExterna.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> PutPacote(Guid id, Pacote pacote)
         {
-            Passagem passagem = _passagem.EncontrarPorId(pacote.Passagem.Id).Result;
+            Passagem passagem = _passagem.EncontrarPorId(pacote.Passagem).Result;
             if (passagem == null) return NotFound();
-            pacote.Passagem = passagem;
 
-            Hotel hotel = _hotel.EncontrarPorId(pacote.Hotel.Id).Result;
+            Hotel hotel = _hotel.EncontrarPorId(pacote.Hotel).Result;
             if (hotel == null) return NotFound();
-            pacote.Hotel = hotel;
 
-            Cliente cliente = _cliente.EncontrarPorId(pacote.Cliente.Id).Result;
+            Cliente cliente = _cliente.EncontrarPorId(pacote.Cliente).Result;
             if (cliente == null) return NotFound();
-            pacote.Cliente = cliente;
 
             HttpStatusCode code = await _pacote.Atualizar(id, pacote);
             return StatusCode((int)code);
@@ -72,17 +69,14 @@ namespace AndreTurismoAPIExterna.Controllers
         [HttpPost]
         public async Task<ActionResult> PostPacote(Pacote pacote)
         {
-            Passagem passagem = _passagem.EncontrarPorId(pacote.Passagem.Id).Result;
+            Passagem passagem = _passagem.EncontrarPorId(pacote.Passagem).Result;
             if (passagem == null) return NotFound();
-            pacote.Passagem = passagem;
 
-            Hotel hotel = _hotel.EncontrarPorId(pacote.Hotel.Id).Result;
+            Hotel hotel = _hotel.EncontrarPorId(pacote.Hotel).Result;
             if (hotel == null) return NotFound();
-            pacote.Hotel = hotel;
 
-            Cliente cliente = _cliente.EncontrarPorId(pacote.Cliente.Id).Result;
+            Cliente cliente = _cliente.EncontrarPorId(pacote.Cliente).Result;
             if (cliente == null) return NotFound();
-            pacote.Cliente = cliente;
 
             HttpStatusCode code = await _pacote.Enviar(pacote);
             return StatusCode((int)code);

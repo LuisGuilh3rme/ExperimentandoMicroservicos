@@ -22,267 +22,30 @@ namespace AndreTurismoAPIExterna.PacoteService.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("AndreTurismoAPIExterna.Models.Cidade", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Cidade");
-                });
-
-            modelBuilder.Entity("AndreTurismoAPIExterna.Models.Cliente", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("DataCadastro")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("EnderecoId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Telefone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EnderecoId");
-
-                    b.ToTable("Cliente");
-                });
-
-            modelBuilder.Entity("AndreTurismoAPIExterna.Models.Endereco", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Bairro")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CEP")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("CidadeId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Complemento")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DataCadastro")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Logradouro")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Numero")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CidadeId");
-
-                    b.ToTable("Endereco");
-                });
-
-            modelBuilder.Entity("AndreTurismoAPIExterna.Models.Hotel", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("DataCadastro")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("EnderecoId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Valor")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EnderecoId");
-
-                    b.ToTable("Hotel");
-                });
-
             modelBuilder.Entity("AndreTurismoAPIExterna.Models.Pacote", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ClienteId")
+                    b.Property<Guid>("Cliente")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DataCadastro")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("HotelId")
+                    b.Property<Guid>("Hotel")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("PassagemId")
+                    b.Property<Guid>("Passagem")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Valor")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ClienteId")
-                        .IsUnique();
-
-                    b.HasIndex("HotelId")
-                        .IsUnique();
-
-                    b.HasIndex("PassagemId")
-                        .IsUnique();
 
                     b.ToTable("Pacote");
-                });
-
-            modelBuilder.Entity("AndreTurismoAPIExterna.Models.Passagem", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ClienteId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("Data")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("DestinoId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("OrigemId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("Valor")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClienteId")
-                        .IsUnique();
-
-                    b.HasIndex("DestinoId")
-                        .IsUnique();
-
-                    b.HasIndex("OrigemId")
-                        .IsUnique();
-
-                    b.ToTable("Passagem");
-                });
-
-            modelBuilder.Entity("AndreTurismoAPIExterna.Models.Cliente", b =>
-                {
-                    b.HasOne("AndreTurismoAPIExterna.Models.Endereco", "Endereco")
-                        .WithMany()
-                        .HasForeignKey("EnderecoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Endereco");
-                });
-
-            modelBuilder.Entity("AndreTurismoAPIExterna.Models.Endereco", b =>
-                {
-                    b.HasOne("AndreTurismoAPIExterna.Models.Cidade", "Cidade")
-                        .WithMany()
-                        .HasForeignKey("CidadeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Cidade");
-                });
-
-            modelBuilder.Entity("AndreTurismoAPIExterna.Models.Hotel", b =>
-                {
-                    b.HasOne("AndreTurismoAPIExterna.Models.Endereco", "Endereco")
-                        .WithMany()
-                        .HasForeignKey("EnderecoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Endereco");
-                });
-
-            modelBuilder.Entity("AndreTurismoAPIExterna.Models.Pacote", b =>
-                {
-                    b.HasOne("AndreTurismoAPIExterna.Models.Cliente", "Cliente")
-                        .WithOne()
-                        .HasForeignKey("AndreTurismoAPIExterna.Models.Pacote", "ClienteId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("AndreTurismoAPIExterna.Models.Hotel", "Hotel")
-                        .WithOne()
-                        .HasForeignKey("AndreTurismoAPIExterna.Models.Pacote", "HotelId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("AndreTurismoAPIExterna.Models.Passagem", "Passagem")
-                        .WithOne()
-                        .HasForeignKey("AndreTurismoAPIExterna.Models.Pacote", "PassagemId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Cliente");
-
-                    b.Navigation("Hotel");
-
-                    b.Navigation("Passagem");
-                });
-
-            modelBuilder.Entity("AndreTurismoAPIExterna.Models.Passagem", b =>
-                {
-                    b.HasOne("AndreTurismoAPIExterna.Models.Cliente", "Cliente")
-                        .WithOne()
-                        .HasForeignKey("AndreTurismoAPIExterna.Models.Passagem", "ClienteId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("AndreTurismoAPIExterna.Models.Endereco", "Destino")
-                        .WithOne()
-                        .HasForeignKey("AndreTurismoAPIExterna.Models.Passagem", "DestinoId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("AndreTurismoAPIExterna.Models.Endereco", "Origem")
-                        .WithOne()
-                        .HasForeignKey("AndreTurismoAPIExterna.Models.Passagem", "OrigemId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Cliente");
-
-                    b.Navigation("Destino");
-
-                    b.Navigation("Origem");
                 });
 #pragma warning restore 612, 618
         }
