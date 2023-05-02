@@ -9,7 +9,7 @@ namespace AndreTurismoAPIExterna.Services
     {
         static readonly HttpClient cliente = new HttpClient();
 
-        public async Task<List<Cliente>> GetClient()
+        public async Task<List<Cliente>> Encontrar()
         {
             try
             {
@@ -25,7 +25,7 @@ namespace AndreTurismoAPIExterna.Services
             }
         }
 
-        public async Task<Cliente> GetClientById(int id)
+        public async Task<Cliente> EncontrarPorId(int id)
         {
             try
             {
@@ -41,24 +41,36 @@ namespace AndreTurismoAPIExterna.Services
             }
         }
 
-        public async Task<HttpStatusCode> UpdateClient(int id, Cliente c)
+        public async Task<HttpStatusCode> Atualizar(int id, Cliente c)
         {
+            c = RemoverIds(c);
+
             HttpContent httpContent = new StringContent(JsonConvert.SerializeObject(c), Encoding.UTF8, "application/JSON");
             HttpResponseMessage resposta = await cliente.PutAsync("https://localhost:5002/api/Clientes/" + id, httpContent);
             return resposta.StatusCode;
         }
 
-        public async Task<HttpStatusCode> PostClient(Cliente c)
+        public async Task<HttpStatusCode> Enviar(Cliente c)
         {
+            c = RemoverIds(c);
+
             HttpContent httpContent = new StringContent(JsonConvert.SerializeObject(c), Encoding.UTF8, "application/JSON");
             HttpResponseMessage resposta = await cliente.PostAsync("https://localhost:5002/api/Clientes/", httpContent);
             return resposta.StatusCode;
         }
 
-        public async Task<HttpStatusCode> DeleteClient(int id)
+        public async Task<HttpStatusCode> Deletar(int id)
         {
             HttpResponseMessage resposta = await cliente.DeleteAsync("https://localhost:5002/api/Clientes/" + id);
             return resposta.StatusCode;
+        }
+
+        private Cliente RemoverIds (Cliente cliente)
+        {
+            cliente.Endereco.Id = 0;
+            cliente.Endereco.Cidade.Id = 0;
+
+            return cliente;
         }
     }
 }

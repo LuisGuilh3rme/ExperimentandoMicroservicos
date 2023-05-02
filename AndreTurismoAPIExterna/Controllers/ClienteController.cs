@@ -25,7 +25,7 @@ namespace AndreTurismoAPIExterna.Controllers
         [HttpGet]
         public ActionResult<List<Cliente>> GetCliente()
         {
-            List<Cliente> clientes = _cliente.GetClient().Result;
+            List<Cliente> clientes = _cliente.Encontrar().Result;
             if (clientes.Count == 0) return NoContent();
             return clientes;
         }
@@ -34,7 +34,7 @@ namespace AndreTurismoAPIExterna.Controllers
         [HttpGet("{id}")]
         public ActionResult<Cliente> GetClienteById(int id)
         {
-            Cliente cliente = _cliente.GetClientById(id).Result;
+            Cliente cliente = _cliente.EncontrarPorId(id).Result;
             if (cliente == null) return NotFound();
             return cliente;
         }
@@ -47,11 +47,8 @@ namespace AndreTurismoAPIExterna.Controllers
         {
             Endereco endereco = _endereco.GetAddressById(cliente.Endereco.Id).Result;
             if (endereco == null) return NotFound();
-            endereco.Id = 0;
-            endereco.Cidade.Id = 0;
-            cliente.Endereco = endereco;
 
-            HttpStatusCode code = await _cliente.UpdateClient(id, cliente);
+            HttpStatusCode code = await _cliente.Atualizar(id, cliente);
             return StatusCode((int)code);
         }
 
@@ -63,11 +60,8 @@ namespace AndreTurismoAPIExterna.Controllers
         {
             Endereco endereco = _endereco.GetAddressById(cliente.Endereco.Id).Result;
             if (endereco == null) return NotFound();
-            endereco.Id = 0;
-            endereco.Cidade.Id = 0;
-            cliente.Endereco = endereco;
 
-            HttpStatusCode code = await _cliente.PostClient(cliente);
+            HttpStatusCode code = await _cliente.Enviar(cliente);
             return StatusCode((int)code);
         }
         
@@ -76,7 +70,7 @@ namespace AndreTurismoAPIExterna.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteCliente(int id)
         {
-            HttpStatusCode code = await _cliente.DeleteClient(id);
+            HttpStatusCode code = await _cliente.Deletar(id);
             return StatusCode((int)code);
         }
 

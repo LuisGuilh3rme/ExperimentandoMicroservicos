@@ -56,7 +56,7 @@ namespace AndreTurismoAPIExterna.Controllers
             Hotel hotel = _hotel.EncontrarPorId(pacote.Hotel.Id).Result;
             if (hotel == null) return NotFound();
 
-            Cliente cliente = _cliente.GetClientById(pacote.Cliente.Id).Result;
+            Cliente cliente = _cliente.EncontrarPorId(pacote.Cliente.Id).Result;
             if (cliente == null) return NotFound();
 
             HttpStatusCode code = await _pacote.Atualizar(id, pacote);
@@ -75,7 +75,7 @@ namespace AndreTurismoAPIExterna.Controllers
             Hotel hotel = _hotel.EncontrarPorId(pacote.Hotel.Id).Result;
             if (hotel == null) return NotFound();
 
-            Cliente cliente = _cliente.GetClientById(pacote.Cliente.Id).Result;
+            Cliente cliente = _cliente.EncontrarPorId(pacote.Cliente.Id).Result;
             if (cliente == null) return NotFound();
 
             HttpStatusCode code = await _pacote.Enviar(pacote);

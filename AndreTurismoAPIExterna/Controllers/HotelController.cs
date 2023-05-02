@@ -47,9 +47,6 @@ namespace AndreTurismoAPIExterna.Controllers
         {
             Endereco endereco = _endereco.GetAddressById(hotel.Endereco.Id).Result;
             if (endereco == null) return NotFound();
-            endereco.Id = 0;
-            endereco.Cidade.Id = 0;
-            hotel.Endereco = endereco;
 
             HttpStatusCode code = await _hotel.Atualizar(id, hotel);
             return StatusCode((int)code);
