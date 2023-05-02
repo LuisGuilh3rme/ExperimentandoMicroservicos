@@ -80,7 +80,7 @@ namespace AndreTurismoAPIExterna.EnderecoService.Controllers
             }
 
             enderecoExistente.Numero = numero;
-            _context.Endereco.Update(enderecoExistente);
+            _context.Entry<Endereco>(enderecoExistente).State = EntityState.Modified;
 
             try
             {
