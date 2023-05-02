@@ -51,10 +51,10 @@ namespace AndreTurismoAPIExterna.Controllers
         {
             Endereco endereco;
 
-            endereco = _endereco.GetAddressById(passagem.Origem.Id).Result;
+            endereco = _endereco.EncontrarPorId(passagem.Origem.Id).Result;
             if (endereco == null) return NotFound();
             
-            endereco = _endereco.GetAddressById(passagem.Destino.Id).Result;
+            endereco = _endereco.EncontrarPorId(passagem.Destino.Id).Result;
             if (endereco == null) return NotFound();
 
             Cliente cliente = _cliente.EncontrarPorId(passagem.Cliente.Id).Result;
@@ -72,10 +72,10 @@ namespace AndreTurismoAPIExterna.Controllers
         {
             Endereco endereco;
 
-            endereco = _endereco.GetAddressById(passagem.Origem.Id).Result;
+            endereco = _endereco.EncontrarPorId(passagem.Origem.Id).Result;
             if (endereco == null) return NotFound();
 
-            endereco = _endereco.GetAddressById(passagem.Destino.Id).Result;
+            endereco = _endereco.EncontrarPorId(passagem.Destino.Id).Result;
             if (endereco == null) return NotFound();
 
             Cliente cliente = _cliente.EncontrarPorId(passagem.Cliente.Id).Result;
