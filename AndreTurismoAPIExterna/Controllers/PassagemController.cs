@@ -29,7 +29,7 @@ namespace AndreTurismoAPIExterna.Controllers
         [HttpGet]
         public ActionResult<List<Passagem>> GetPassagem()
         {
-            List<Passagem> passagens = _passagem.GetTicket().Result;
+            List<Passagem> passagens = _passagem.Encontrar().Result;
             if (passagens.Count == 0) return NoContent();
             return passagens;
         }
@@ -38,7 +38,7 @@ namespace AndreTurismoAPIExterna.Controllers
         [HttpGet("{id}")]
         public ActionResult<Passagem> GetPassagemById(int id)
         {
-            Passagem passagem = _passagem.GetTicketById(id).Result;
+            Passagem passagem = _passagem.EncontrarPorId(id).Result;
             if (passagem == null) return NotFound();
             return passagem;
         }
@@ -53,25 +53,14 @@ namespace AndreTurismoAPIExterna.Controllers
 
             endereco = _endereco.GetAddressById(passagem.Origem.Id).Result;
             if (endereco == null) return NotFound();
-            endereco.Id = 0;
-            endereco.Cidade.Id = 0;
-            passagem.Origem = endereco;
-
+            
             endereco = _endereco.GetAddressById(passagem.Destino.Id).Result;
             if (endereco == null) return NotFound();
-            endereco.Id = 0;
-            endereco.Cidade.Id = 0;
-            passagem.Origem = endereco;
 
             Cliente cliente = _cliente.GetClientById(passagem.Cliente.Id).Result;
             if (cliente == null) return NotFound();
-            cliente.Id = 0;
-            endereco.Id = 0;
-            endereco.Cidade.Id = 0;
-            cliente.Endereco = endereco;
-            passagem.Cliente = cliente;
 
-            HttpStatusCode code = await _passagem.UpdateTicket(id, passagem);
+            HttpStatusCode code = await _passagem.Atualizar(id, passagem);
             return StatusCode((int)code);
         }
 
@@ -85,25 +74,14 @@ namespace AndreTurismoAPIExterna.Controllers
 
             endereco = _endereco.GetAddressById(passagem.Origem.Id).Result;
             if (endereco == null) return NotFound();
-            endereco.Id = 0;
-            endereco.Cidade.Id = 0;
-            passagem.Origem = endereco;
 
             endereco = _endereco.GetAddressById(passagem.Destino.Id).Result;
             if (endereco == null) return NotFound();
-            endereco.Id = 0;
-            endereco.Cidade.Id = 0;
-            passagem.Destino = endereco;
 
             Cliente cliente = _cliente.GetClientById(passagem.Cliente.Id).Result;
             if (cliente == null) return NotFound();
-            cliente.Id = 0;
-            endereco.Id = 0;
-            endereco.Cidade.Id = 0;
-            cliente.Endereco = endereco;
-            passagem.Cliente = cliente;
 
-            HttpStatusCode code = await _passagem.PostTicket(passagem);
+            HttpStatusCode code = await _passagem.Enviar(passagem);
             return StatusCode((int)code);
         }
         
@@ -112,7 +90,7 @@ namespace AndreTurismoAPIExterna.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeletePassagem(int id)
         {
-            HttpStatusCode code = await _passagem.DeleteTicket(id);
+            HttpStatusCode code = await _passagem.Deletar(id);
             return StatusCode((int)code);
         }
 

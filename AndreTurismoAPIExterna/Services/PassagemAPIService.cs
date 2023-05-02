@@ -9,7 +9,7 @@ namespace AndreTurismoAPIExterna.Services
     {
         static readonly HttpClient cliente = new HttpClient();
 
-        public async Task<List<Passagem>> GetTicket()
+        public async Task<List<Passagem>> Encontrar()
         {
             try
             {
@@ -25,7 +25,7 @@ namespace AndreTurismoAPIExterna.Services
             }
         }
 
-        public async Task<Passagem> GetTicketById(int id)
+        public async Task<Passagem> EncontrarPorId(int id)
         {
             try
             {
@@ -41,24 +41,43 @@ namespace AndreTurismoAPIExterna.Services
             }
         }
 
-        public async Task<HttpStatusCode> UpdateTicket(int id, Passagem passagem)
+        public async Task<HttpStatusCode> Atualizar(int id, Passagem passagem)
         {
+            passagem = RemoverIds(passagem);
+
             HttpContent httpContent = new StringContent(JsonConvert.SerializeObject(passagem), Encoding.UTF8, "application/JSON");
             HttpResponseMessage resposta = await cliente.PutAsync("https://localhost:5004/api/Passagens/" + id, httpContent);
             return resposta.StatusCode;
         }
 
-        public async Task<HttpStatusCode> PostTicket(Passagem passagem)
+        public async Task<HttpStatusCode> Enviar(Passagem passagem)
         {
+            passagem = RemoverIds(passagem);
+
             HttpContent httpContent = new StringContent(JsonConvert.SerializeObject(passagem), Encoding.UTF8, "application/JSON");
             HttpResponseMessage resposta = await cliente.PostAsync("https://localhost:5004/api/Passagens/", httpContent);
             return resposta.StatusCode;
         }
 
-        public async Task<HttpStatusCode> DeleteTicket(int id)
+        public async Task<HttpStatusCode> Deletar(int id)
         {
             HttpResponseMessage resposta = await cliente.DeleteAsync("https://localhost:5004/api/Passagens/" + id);
             return resposta.StatusCode;
+        }
+
+        private Passagem RemoverIds(Passagem passagem)
+        {
+            passagem.Origem.Id = 0;
+            passagem.Origem.Cidade.Id = 0;
+
+            passagem.Destino.Id = 0;
+            passagem.Destino.Cidade.Id = 0;
+
+            passagem.Cliente.Id = 0;
+            passagem.Cliente.Endereco.Id = 0;
+            passagem.Cliente.Endereco.Cidade.Id = 0;
+
+            return passagem;
         }
     }
 }

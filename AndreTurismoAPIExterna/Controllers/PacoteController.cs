@@ -50,7 +50,7 @@ namespace AndreTurismoAPIExterna.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> PutPacote(int id, Pacote pacote)
         {
-            Passagem passagem = _passagem.GetTicketById(id).Result;
+            Passagem passagem = _passagem.EncontrarPorId(id).Result;
             if (passagem == null) return NotFound();
 
             Hotel hotel = _hotel.GetHotelById(pacote.Hotel.Id).Result;
@@ -69,7 +69,7 @@ namespace AndreTurismoAPIExterna.Controllers
         [HttpPost]
         public async Task<ActionResult> PostPacote(Pacote pacote)
         {
-            Passagem passagem = _passagem.GetTicketById(pacote.Passagem.Id).Result;
+            Passagem passagem = _passagem.EncontrarPorId(pacote.Passagem.Id).Result;
             if (passagem == null) return NotFound();
 
             Hotel hotel = _hotel.GetHotelById(pacote.Hotel.Id).Result;
