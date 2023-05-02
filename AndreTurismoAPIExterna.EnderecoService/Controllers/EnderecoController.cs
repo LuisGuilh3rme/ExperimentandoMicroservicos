@@ -145,7 +145,7 @@ namespace AndreTurismoAPIExterna.EnderecoService.Controllers
             _context.Endereco.Remove(endereco);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok();
         }
 
         private bool EnderecoExists(int id)

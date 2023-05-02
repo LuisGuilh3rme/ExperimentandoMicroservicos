@@ -6,6 +6,8 @@ using Microsoft.Extensions.Options;
 using AndreTurismoAPIExterna.EnderecoService.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Xunit;
+using AndreTurismoAPIExterna.ClienteService.Controllers;
+using AndreTurismoAPIExterna.ClienteService.Data;
 
 namespace AndreTurismoAPIExterna.Teste
 {
@@ -84,6 +86,20 @@ namespace AndreTurismoAPIExterna.Teste
                 Endereco endereco = new Endereco { Id = 1, CEP = "04961990", Numero = 5, Cidade = new Cidade() };
                 var retorno = controlador.PutEndereco(endereco.Id, endereco.Numero, endereco).Result.Value;
                 Assert.Equal(endereco.CEP, retorno.CEP);
+            }
+        }
+
+        [Fact]
+        public void Deletar()
+        {
+            InicializarBanco();
+
+            {
+                var contexto = new AndreTurismoAPIExternaEnderecoServiceContext(opcoes);
+                EnderecoController controlador = new EnderecoController(contexto);
+
+                var retorno = controlador.DeleteEndereco(1).Result;
+                Assert.IsType<OkResult>(retorno);
             }
         }
     }
