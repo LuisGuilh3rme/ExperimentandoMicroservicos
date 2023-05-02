@@ -53,7 +53,7 @@ namespace AndreTurismoAPIExterna.Controllers
             Passagem passagem = _passagem.EncontrarPorId(id).Result;
             if (passagem == null) return NotFound();
 
-            Hotel hotel = _hotel.GetHotelById(pacote.Hotel.Id).Result;
+            Hotel hotel = _hotel.EncontrarPorId(pacote.Hotel.Id).Result;
             if (hotel == null) return NotFound();
 
             Cliente cliente = _cliente.GetClientById(pacote.Cliente.Id).Result;
@@ -72,7 +72,7 @@ namespace AndreTurismoAPIExterna.Controllers
             Passagem passagem = _passagem.EncontrarPorId(pacote.Passagem.Id).Result;
             if (passagem == null) return NotFound();
 
-            Hotel hotel = _hotel.GetHotelById(pacote.Hotel.Id).Result;
+            Hotel hotel = _hotel.EncontrarPorId(pacote.Hotel.Id).Result;
             if (hotel == null) return NotFound();
 
             Cliente cliente = _cliente.GetClientById(pacote.Cliente.Id).Result;

@@ -9,7 +9,7 @@ namespace AndreTurismoAPIExterna.Services
     {
         static readonly HttpClient cliente = new HttpClient();
 
-        public async Task<List<Hotel>> GetHotel()
+        public async Task<List<Hotel>> Encontrar()
         {
             try
             {
@@ -25,7 +25,7 @@ namespace AndreTurismoAPIExterna.Services
             }
         }
 
-        public async Task<Hotel> GetHotelById(int id)
+        public async Task<Hotel> EncontrarPorId(int id)
         {
             try
             {
@@ -41,24 +41,36 @@ namespace AndreTurismoAPIExterna.Services
             }
         }
 
-        public async Task<HttpStatusCode> UpdateHotel(int id, Hotel hotel)
+        public async Task<HttpStatusCode> Atualizar(int id, Hotel hotel)
         {
+            hotel = RemoverIds(hotel);
+
             HttpContent httpContent = new StringContent(JsonConvert.SerializeObject(hotel), Encoding.UTF8, "application/JSON");
             HttpResponseMessage resposta = await cliente.PutAsync("https://localhost:5003/api/Hotels/" + id, httpContent);
             return resposta.StatusCode;
         }
 
-        public async Task<HttpStatusCode> PostHotel(Hotel hotel)
+        public async Task<HttpStatusCode> Enviar(Hotel hotel)
         {
+            hotel = RemoverIds(hotel);
+
             HttpContent httpContent = new StringContent(JsonConvert.SerializeObject(hotel), Encoding.UTF8, "application/JSON");
             HttpResponseMessage resposta = await cliente.PostAsync("https://localhost:5003/api/Hotels/", httpContent);
             return resposta.StatusCode;
         }
 
-        public async Task<HttpStatusCode> DeleteHotel(int id)
+        public async Task<HttpStatusCode> Deletar(int id)
         {
             HttpResponseMessage resposta = await cliente.DeleteAsync("https://localhost:5003/api/Hotels/" + id);
             return resposta.StatusCode;
+        }
+
+        private Hotel RemoverIds (Hotel hotel)
+        {
+            hotel.Endereco.Id = 0;
+            hotel.Endereco.Cidade.Id = 0;
+
+            return hotel;
         }
     }
 }

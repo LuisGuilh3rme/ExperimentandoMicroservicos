@@ -25,7 +25,7 @@ namespace AndreTurismoAPIExterna.Controllers
         [HttpGet]
         public ActionResult<List<Hotel>> GetHotel()
         {
-            List<Hotel> hotels = _hotel.GetHotel().Result;
+            List<Hotel> hotels = _hotel.Encontrar().Result;
             if (hotels.Count == 0) return NoContent();
             return hotels;
         }
@@ -34,7 +34,7 @@ namespace AndreTurismoAPIExterna.Controllers
         [HttpGet("{id}")]
         public ActionResult<Hotel> GetHotelById(int id)
         {
-            Hotel hotel = _hotel.GetHotelById(id).Result;
+            Hotel hotel = _hotel.EncontrarPorId(id).Result;
             if (hotel == null) return NotFound();
             return hotel;
         }
@@ -51,7 +51,7 @@ namespace AndreTurismoAPIExterna.Controllers
             endereco.Cidade.Id = 0;
             hotel.Endereco = endereco;
 
-            HttpStatusCode code = await _hotel.UpdateHotel(id, hotel);
+            HttpStatusCode code = await _hotel.Atualizar(id, hotel);
             return StatusCode((int)code);
         }
 
@@ -63,11 +63,8 @@ namespace AndreTurismoAPIExterna.Controllers
         {
             Endereco endereco = _endereco.GetAddressById(hotel.Endereco.Id).Result;
             if (endereco == null) return NotFound();
-            endereco.Id = 0;
-            endereco.Cidade.Id = 0;
-            hotel.Endereco = endereco;
 
-            HttpStatusCode code = await _hotel.PostHotel(hotel);
+            HttpStatusCode code = await _hotel.Enviar(hotel);
             return StatusCode((int)code);
         }
         
@@ -76,7 +73,7 @@ namespace AndreTurismoAPIExterna.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteHotel(int id)
         {
-            HttpStatusCode code = await _hotel.DeleteHotel(id);
+            HttpStatusCode code = await _hotel.Deletar(id);
             return StatusCode((int)code);
         }
 
