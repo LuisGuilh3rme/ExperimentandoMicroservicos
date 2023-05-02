@@ -53,7 +53,7 @@ namespace AndreTurismoAPIExterna.HotelService.Controllers
         // PUT: api/Hotels/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutHotel(int id, Hotel hotel)
+        public async Task<ActionResult<Hotel>> PutHotel(int id, Hotel hotel)
         {
             if (id != hotel.Id)
             {
@@ -61,7 +61,7 @@ namespace AndreTurismoAPIExterna.HotelService.Controllers
             }
 
             _context.Update(hotel.Endereco);
-            _context.Update(hotel);
+            _context.Entry<Hotel>(hotel).State = EntityState.Modified;
 
             try
             {
@@ -79,7 +79,7 @@ namespace AndreTurismoAPIExterna.HotelService.Controllers
                 }
             }
 
-            return NoContent();
+            return hotel;
         }
 
         // POST: api/Hotels
@@ -94,7 +94,7 @@ namespace AndreTurismoAPIExterna.HotelService.Controllers
             _context.Hotel.Add(hotel);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetHotel", new { id = hotel.Id }, hotel);
+            return hotel;
         }
 
         // DELETE: api/Hotels/5
@@ -114,7 +114,7 @@ namespace AndreTurismoAPIExterna.HotelService.Controllers
             _context.Hotel.Remove(hotel);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok();
         }
 
         private bool HotelExists(int id)

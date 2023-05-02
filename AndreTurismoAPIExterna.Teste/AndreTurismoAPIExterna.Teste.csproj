@@ -26,6 +26,7 @@
   <ItemGroup>
     <ProjectReference Include="..\AndreTurismoAPIExterna.ClienteService\AndreTurismoAPIExterna.ClienteService.csproj" />
     <ProjectReference Include="..\AndreTurismoAPIExterna.EnderecoService\AndreTurismoAPIExterna.EnderecoService.csproj" />
+    <ProjectReference Include="..\AndreTurismoAPIExterna.HotelService\AndreTurismoAPIExterna.HotelService.csproj" />
   </ItemGroup>
 
 </Project>
