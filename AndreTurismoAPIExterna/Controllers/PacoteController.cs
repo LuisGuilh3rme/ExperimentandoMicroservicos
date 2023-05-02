@@ -30,7 +30,7 @@ namespace AndreTurismoAPIExterna.Controllers
         [HttpGet]
         public ActionResult<List<Pacote>> GetPacote()
         {
-            List<Pacote> pacotes = _pacote.GetPackage().Result;
+            List<Pacote> pacotes = _pacote.Encontrar().Result;
             if (pacotes.Count == 0) return NoContent();
             return pacotes;
         }
@@ -39,7 +39,7 @@ namespace AndreTurismoAPIExterna.Controllers
         [HttpGet("{id}")]
         public ActionResult<Pacote> GetPacoteById(int id)
         {
-            Pacote pacote = _pacote.GetPackageById(id).Result;
+            Pacote pacote = _pacote.EncontrarPorId(id).Result;
             if (pacote == null) return NotFound();
             return pacote;
         }
@@ -59,7 +59,7 @@ namespace AndreTurismoAPIExterna.Controllers
             Cliente cliente = _cliente.GetClientById(pacote.Cliente.Id).Result;
             if (cliente == null) return NotFound();
 
-            HttpStatusCode code = await _pacote.UpdatePackage(id, pacote);
+            HttpStatusCode code = await _pacote.Atualizar(id, pacote);
             return StatusCode((int)code);
         }
 
@@ -78,7 +78,7 @@ namespace AndreTurismoAPIExterna.Controllers
             Cliente cliente = _cliente.GetClientById(pacote.Cliente.Id).Result;
             if (cliente == null) return NotFound();
 
-            HttpStatusCode code = await _pacote.PostPackage(pacote);
+            HttpStatusCode code = await _pacote.Enviar(pacote);
             return StatusCode((int)code);
         }
         
@@ -87,7 +87,7 @@ namespace AndreTurismoAPIExterna.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeletePacote(int id)
         {
-            HttpStatusCode code = await _pacote.DeletePackage(id);
+            HttpStatusCode code = await _pacote.Deletar(id);
             return StatusCode((int)code);
         }
 

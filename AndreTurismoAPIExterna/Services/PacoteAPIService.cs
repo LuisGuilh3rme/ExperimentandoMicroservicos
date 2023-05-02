@@ -9,7 +9,7 @@ namespace AndreTurismoAPIExterna.Services
     {
         static readonly HttpClient cliente = new HttpClient();
 
-        public async Task<List<Pacote>> GetPackage()
+        public async Task<List<Pacote>> Encontrar()
         {
             try
             {
@@ -25,7 +25,7 @@ namespace AndreTurismoAPIExterna.Services
             }
         }
 
-        public async Task<Pacote> GetPackageById(int id)
+        public async Task<Pacote> EncontrarPorId(int id)
         {
             try
             {
@@ -41,31 +41,31 @@ namespace AndreTurismoAPIExterna.Services
             }
         }
 
-        public async Task<HttpStatusCode> UpdatePackage(int id, Pacote pacote)
+        public async Task<HttpStatusCode> Atualizar(int id, Pacote pacote)
         {
-            pacote = ClearPackageId(pacote);
+            pacote = RemoverIds(pacote);
 
             HttpContent httpContent = new StringContent(JsonConvert.SerializeObject(pacote), Encoding.UTF8, "application/JSON");
             HttpResponseMessage resposta = await cliente.PutAsync("https://localhost:5005/api/Pacotes/" + id, httpContent);
             return resposta.StatusCode;
         }
 
-        public async Task<HttpStatusCode> PostPackage(Pacote pacote)
+        public async Task<HttpStatusCode> Enviar(Pacote pacote)
         {
-            pacote = ClearPackageId(pacote);
+            pacote = RemoverIds(pacote);
 
             HttpContent httpContent = new StringContent(JsonConvert.SerializeObject(pacote), Encoding.UTF8, "application/JSON");
             HttpResponseMessage resposta = await cliente.PostAsync("https://localhost:5005/api/Pacotes/", httpContent);
             return resposta.StatusCode;
         }
 
-        public async Task<HttpStatusCode> DeletePackage(int id)
+        public async Task<HttpStatusCode> Deletar(int id)
         {
             HttpResponseMessage resposta = await cliente.DeleteAsync("https://localhost:5005/api/Pacotes/" + id);
             return resposta.StatusCode;
         }
 
-        private Pacote ClearPackageId (Pacote pacote)
+        private Pacote RemoverIds (Pacote pacote)
         {
             pacote.Passagem.Id = 0;
             pacote.Passagem.Origem.Id = 0;
