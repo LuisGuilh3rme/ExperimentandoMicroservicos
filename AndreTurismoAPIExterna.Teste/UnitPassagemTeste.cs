@@ -25,9 +25,10 @@ namespace AndreTurismoAPIExterna.Teste
                 Endereco origem = new Endereco { Logradouro = "Rua 1", CEP = "123456789", Bairro = "Bairro 1", Complemento = "null", Cidade = new Cidade() { Nome = "Cidade1" } };
                 Endereco destino = new Endereco { Logradouro = "Rua 2", CEP = "123456789", Bairro = "Bairro 2", Complemento = "sala 5", Cidade = new Cidade() { Nome = "Cidade2" } };
                 Cliente cliente = new Cliente { Nome = "Lorem Ipsum", Telefone = "4002-8922", Endereco = origem, DataCadastro = DateTime.Now };
+                Cliente cliente2 = new Cliente { Nome = "Dolor Sit Amet", Telefone = "4002-8922", Endereco = origem, DataCadastro = DateTime.Now };
 
                 contexto.Passagem.Add(new Passagem { Origem = origem, Destino = destino, Cliente = cliente, Data = DateTime.Now, Valor = 100M});
-                contexto.Passagem.Add(new Passagem { Origem = destino, Destino = origem, Cliente = cliente, Data = DateTime.Now.AddDays(20), Valor = 100M});
+                contexto.Passagem.Add(new Passagem { Origem = destino, Destino = origem, Cliente = cliente2, Data = DateTime.Now.AddDays(20), Valor = 100M});
                 contexto.SaveChanges();
             }
         }
@@ -54,7 +55,7 @@ namespace AndreTurismoAPIExterna.Teste
                 var contexto = new AndreTurismoAPIExternaPassagemServiceContext(opcoes);
                 PassagensController controlador = new PassagensController(contexto);
                 Passagem passagem = controlador.GetPassagem(2).Result.Value;
-                Assert.Equal("Lorem Ipsum", passagem.Cliente.Nome);
+                Assert.Equal("Dolor Sit Amet", passagem.Cliente.Nome);
                 Assert.Equal("Rua 1", passagem.Cliente.Endereco.Logradouro);
             }
         }
