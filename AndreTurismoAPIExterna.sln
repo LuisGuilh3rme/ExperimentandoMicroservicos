@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AndreTurismoAPIExterna.Hote
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AndreTurismoAPIExterna.PassagemService", "AndreTurismoAPIExterna.PassagemService\AndreTurismoAPIExterna.PassagemService.csproj", "{4BA14C4F-D661-45A5-B36E-039DD2CB0EC1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AndreTurismoAPIExterna.PacoteService", "AndreTurismoAPIExterna.PacoteService\AndreTurismoAPIExterna.PacoteService.csproj", "{07C751D6-CDDE-490C-A01B-AE6B15A536CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AndreTurismoAPIExterna.PacoteService", "AndreTurismoAPIExterna.PacoteService\AndreTurismoAPIExterna.PacoteService.csproj", "{07C751D6-CDDE-490C-A01B-AE6B15A536CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AndreTurismoAPIExterna.Teste", "AndreTurismoAPIExterna.Teste\AndreTurismoAPIExterna.Teste.csproj", "{5D9F68CA-6EE0-4B8E-A8FE-B5C6404ACEC7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{07C751D6-CDDE-490C-A01B-AE6B15A536CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07C751D6-CDDE-490C-A01B-AE6B15A536CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{07C751D6-CDDE-490C-A01B-AE6B15A536CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D9F68CA-6EE0-4B8E-A8FE-B5C6404ACEC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D9F68CA-6EE0-4B8E-A8FE-B5C6404ACEC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D9F68CA-6EE0-4B8E-A8FE-B5C6404ACEC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D9F68CA-6EE0-4B8E-A8FE-B5C6404ACEC7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

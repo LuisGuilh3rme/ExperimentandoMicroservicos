@@ -58,24 +58,29 @@ namespace AndreTurismoAPIExterna.EnderecoService.Controllers
         // PUT: api/Enderecos/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}, {numero:int}")]
-        public async Task<IActionResult> PutEndereco(int id, int numero, Endereco endereco)
+        public async Task<ActionResult<Endereco>> PutEndereco(int id, int numero, Endereco endereco)
         {
-            if (endereco.CEP == null)
-            {
-                Endereco? enderecoExistente = await _context.Endereco.FindAsync(id);
-                if (enderecoExistente == null) return NotFound();
+            Endereco? enderecoExistente = await _context.Endereco.FindAsync(id);
+            if (enderecoExistente == null) return NotFound();
 
-                endereco = enderecoExistente;
-                endereco.Numero = numero;
-            }
-
-            else
+            if (endereco.CEP != null)
             {
                 EnderecoDTO enderecoDTO = CorreiosService.GetAddress(endereco.CEP).Result;
-                endereco = new Endereco(enderecoDTO);
-                endereco.Numero = numero;
+                if (enderecoDTO == null) return NotFound();
+
+                enderecoExistente.Logradouro = enderecoDTO.Logradouro;
+                enderecoExistente.Bairro = enderecoDTO.Bairro;
+                enderecoExistente.CEP = enderecoDTO.CEP;
+                enderecoExistente.Complemento = enderecoDTO.Complemento;
+                enderecoExistente.Cidade = new Cidade()
+                {
+                    Nome = enderecoDTO.Cidade,
+                };
+                enderecoExistente.DataCadastro = DateTime.Now;
             }
-            _context.Entry(endereco).State = EntityState.Modified;
+
+            enderecoExistente.Numero = numero;
+            _context.Endereco.Update(enderecoExistente);
 
             try
             {
@@ -93,7 +98,7 @@ namespace AndreTurismoAPIExterna.EnderecoService.Controllers
                 }
             }
 
-            return NoContent();
+            return endereco;
         }
 
         // POST: api/Enderecos
@@ -120,7 +125,7 @@ namespace AndreTurismoAPIExterna.EnderecoService.Controllers
             _context.Endereco.Add(endereco);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetEndereco", new { id = endereco.Id }, endereco);
+            return endereco;
         }
 
         // DELETE: api/Enderecos/5
