@@ -66,7 +66,7 @@ namespace AndreTurismoAPIExterna.PacoteService.Controllers
         // PUT: api/Pacotes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPacote(int id, Pacote pacote)
+        public async Task<ActionResult<Pacote>> PutPacote(int id, Pacote pacote)
         {
             if (id != pacote.Id)
             {
@@ -74,8 +74,14 @@ namespace AndreTurismoAPIExterna.PacoteService.Controllers
             }
 
             _context.Update(pacote.Hotel);
+            await _context.SaveChangesAsync();
+
             _context.Update(pacote.Passagem);
+            await _context.SaveChangesAsync();
+
             _context.Update(pacote.Cliente);
+            await _context.SaveChangesAsync();
+
             _context.Entry(pacote).State = EntityState.Modified;
 
             try
@@ -94,7 +100,7 @@ namespace AndreTurismoAPIExterna.PacoteService.Controllers
                 }
             }
 
-            return NoContent();
+            return pacote;
         }
 
         // POST: api/Pacotes
@@ -109,7 +115,7 @@ namespace AndreTurismoAPIExterna.PacoteService.Controllers
             _context.Pacote.Add(pacote);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPacote", new { id = pacote.Id }, pacote);
+            return pacote;
         }
 
         // DELETE: api/Pacotes/5
@@ -129,7 +135,7 @@ namespace AndreTurismoAPIExterna.PacoteService.Controllers
             _context.Pacote.Remove(pacote);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok();
         }
 
         private bool PacoteExists(int id)
