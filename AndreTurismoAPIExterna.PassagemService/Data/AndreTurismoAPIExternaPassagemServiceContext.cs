@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AndreTurismoAPIExterna.Models;
+using AndreTurismoAPIExterna.PassagemService.Mapping;
 using Microsoft.EntityFrameworkCore;
-using AndreTurismoAPIExterna.Models;
 
 namespace AndreTurismoAPIExterna.PassagemService.Data
 {
@@ -15,5 +12,11 @@ namespace AndreTurismoAPIExterna.PassagemService.Data
         }
 
         public DbSet<AndreTurismoAPIExterna.Models.Passagem> Passagem { get; set; } = default!;
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            new PassagemMap().Configure(modelBuilder.Entity<Passagem>());
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

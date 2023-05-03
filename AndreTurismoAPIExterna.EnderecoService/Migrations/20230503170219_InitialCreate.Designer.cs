@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AndreTurismoAPIExterna.EnderecoService.Migrations
 {
     [DbContext(typeof(AndreTurismoAPIExternaEnderecoServiceContext))]
-    [Migration("20230503130537_InitialCreate")]
+    [Migration("20230503170219_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,11 +32,11 @@ namespace AndreTurismoAPIExterna.EnderecoService.Migrations
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(50)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cidade");
+                    b.ToTable("Cidade", "dbo");
                 });
 
             modelBuilder.Entity("AndreTurismoAPIExterna.Models.Endereco", b =>
@@ -47,34 +47,44 @@ namespace AndreTurismoAPIExterna.EnderecoService.Migrations
 
                     b.Property<string>("Bairro")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("varchar(50)")
+                        .HasDefaultValue("");
 
                     b.Property<string>("CEP")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("char(8)");
 
                     b.Property<Guid>("CidadeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Complemento")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("varchar(50)")
+                        .HasDefaultValue("");
 
                     b.Property<DateTime>("DataCadastro")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
 
                     b.Property<string>("Logradouro")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("varchar(50)")
+                        .HasDefaultValue("");
 
                     b.Property<int>("Numero")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
 
                     b.HasKey("Id");
 
                     b.HasIndex("CidadeId");
 
-                    b.ToTable("Endereco");
+                    b.ToTable("Endereco", "dbo");
                 });
 
             modelBuilder.Entity("AndreTurismoAPIExterna.Models.Endereco", b =>

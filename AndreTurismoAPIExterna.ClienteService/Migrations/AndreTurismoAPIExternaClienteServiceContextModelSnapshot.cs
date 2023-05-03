@@ -29,22 +29,26 @@ namespace AndreTurismoAPIExterna.ClienteService.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DataCadastro")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
 
                     b.Property<Guid>("Endereco")
-                        .HasColumnType("uniqueidentifier");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("newid()");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("Telefone")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(9)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cliente");
+                    b.ToTable("Cliente", "dbo");
                 });
 #pragma warning restore 612, 618
         }

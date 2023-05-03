@@ -9,15 +9,19 @@ namespace AndreTurismoAPIExterna.HotelService.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "dbo");
+
             migrationBuilder.CreateTable(
                 name: "Hotel",
+                schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Endereco = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DataCadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Valor = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    Nome = table.Column<string>(type: "varchar(50)", nullable: false),
+                    Endereco = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "newid()"),
+                    DataCadastro = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "getdate()"),
+                    Valor = table.Column<decimal>(type: "decimal(18,2)", nullable: false, defaultValue: 0m)
                 },
                 constraints: table =>
                 {
@@ -28,7 +32,8 @@ namespace AndreTurismoAPIExterna.HotelService.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Hotel");
+                name: "Hotel",
+                schema: "dbo");
         }
     }
 }

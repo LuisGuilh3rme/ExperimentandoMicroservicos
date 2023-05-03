@@ -29,23 +29,33 @@ namespace AndreTurismoAPIExterna.PassagemService.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("Cliente")
-                        .HasColumnType("uniqueidentifier");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("newid()");
 
                     b.Property<DateTime>("Data")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
 
                     b.Property<Guid>("Destino")
-                        .HasColumnType("uniqueidentifier");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("newid()");
 
                     b.Property<Guid>("Origem")
-                        .HasColumnType("uniqueidentifier");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("newid()");
 
                     b.Property<decimal>("Valor")
-                        .HasColumnType("decimal(18,2)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("decimal(18,2)")
+                        .HasDefaultValue(0m);
 
                     b.HasKey("Id");
 
-                    b.ToTable("Passagem");
+                    b.ToTable("Passagem", "dbo");
                 });
 #pragma warning restore 612, 618
         }

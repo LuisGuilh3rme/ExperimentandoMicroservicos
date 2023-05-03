@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using AndreTurismoAPIExterna.ClienteService.Mapping;
 using AndreTurismoAPIExterna.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace AndreTurismoAPIExterna.ClienteService.Data
 {
@@ -15,5 +12,12 @@ namespace AndreTurismoAPIExterna.ClienteService.Data
         }
 
         public DbSet<AndreTurismoAPIExterna.Models.Cliente> Cliente { get; set; } = default!;
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            new ClienteMap().Configure(modelBuilder.Entity<Cliente>());
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

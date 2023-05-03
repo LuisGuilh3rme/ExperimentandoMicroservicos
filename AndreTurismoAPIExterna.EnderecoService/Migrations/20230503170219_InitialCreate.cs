@@ -9,12 +9,16 @@ namespace AndreTurismoAPIExterna.EnderecoService.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "dbo");
+
             migrationBuilder.CreateTable(
                 name: "Cidade",
+                schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Nome = table.Column<string>(type: "varchar(50)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -23,16 +27,17 @@ namespace AndreTurismoAPIExterna.EnderecoService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Endereco",
+                schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Logradouro = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Numero = table.Column<int>(type: "int", nullable: false),
-                    Bairro = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CEP = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Complemento = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Logradouro = table.Column<string>(type: "varchar(50)", nullable: false, defaultValue: ""),
+                    Numero = table.Column<int>(type: "integer", nullable: false, defaultValue: 0),
+                    Bairro = table.Column<string>(type: "varchar(50)", nullable: false, defaultValue: ""),
+                    CEP = table.Column<string>(type: "char(8)", nullable: false),
+                    Complemento = table.Column<string>(type: "varchar(50)", nullable: false, defaultValue: ""),
                     CidadeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DataCadastro = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    DataCadastro = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "getdate()")
                 },
                 constraints: table =>
                 {
@@ -40,6 +45,7 @@ namespace AndreTurismoAPIExterna.EnderecoService.Migrations
                     table.ForeignKey(
                         name: "FK_Endereco_Cidade_CidadeId",
                         column: x => x.CidadeId,
+                        principalSchema: "dbo",
                         principalTable: "Cidade",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -47,6 +53,7 @@ namespace AndreTurismoAPIExterna.EnderecoService.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Endereco_CidadeId",
+                schema: "dbo",
                 table: "Endereco",
                 column: "CidadeId");
         }
@@ -54,10 +61,12 @@ namespace AndreTurismoAPIExterna.EnderecoService.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Endereco");
+                name: "Endereco",
+                schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "Cidade");
+                name: "Cidade",
+                schema: "dbo");
         }
     }
 }
