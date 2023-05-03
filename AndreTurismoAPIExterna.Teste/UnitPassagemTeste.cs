@@ -7,6 +7,7 @@ namespace AndreTurismoAPIExterna.Teste
     {
 
         private DbContextOptions<AndreTurismoAPIExternaPassagemServiceContext> opcoes;
+        private List<Guid> _guids = new List<Guid>();
 
         private void InicializarBanco()
         {
@@ -20,8 +21,10 @@ namespace AndreTurismoAPIExterna.Teste
             {
                 var contexto = new AndreTurismoAPIExternaPassagemServiceContext(opcoes);
 
-                contexto.Passagem.Add(new Passagem { Origem = Guid.NewGuid(), Destino = Guid.NewGuid(), Cliente = Guid.NewGuid(), Data = DateTime.Now, Valor = 100M});
-                contexto.Passagem.Add(new Passagem { Origem = Guid.NewGuid(), Destino = Guid.NewGuid(), Cliente = Guid.NewGuid(), Data = DateTime.Now.AddDays(20), Valor = 100M});
+                _guids.Add(Guid.NewGuid());
+                _guids.Add(Guid.NewGuid());
+                contexto.Passagem.Add(new Passagem { Id = _guids[0], Origem = Guid.NewGuid(), Destino = Guid.NewGuid(), Cliente = Guid.NewGuid(), Data = DateTime.Now, Valor = 100M});
+                contexto.Passagem.Add(new Passagem { Id = _guids[1], Origem = Guid.NewGuid(), Destino = Guid.NewGuid(), Cliente = Guid.NewGuid(), Data = DateTime.Now.AddDays(20), Valor = 100M});
                 contexto.SaveChanges();
             }
         }
@@ -47,9 +50,8 @@ namespace AndreTurismoAPIExterna.Teste
             {
                 var contexto = new AndreTurismoAPIExternaPassagemServiceContext(opcoes);
                 PassagensController controlador = new PassagensController(contexto);
-                Passagem passagem = controlador.GetPassagem(Guid.NewGuid()).Result.Value;
-                Assert.Equal(Guid.NewGuid(), passagem.Cliente);
-                Assert.Equal(Guid.NewGuid(), passagem.Cliente);
+                Passagem passagem = controlador.GetPassagem(_guids[1]).Result.Value;
+                Assert.Equal(100M, passagem.Valor);
             }
         }
 
@@ -79,10 +81,10 @@ namespace AndreTurismoAPIExterna.Teste
                 PassagensController controlador = new PassagensController(contexto);
 
                 Guid guid = Guid.NewGuid();
-                Passagem passagem = new Passagem { Id = guid, Origem = Guid.NewGuid(), Destino = Guid.NewGuid(), Cliente = Guid.NewGuid(), Data = DateTime.Now, Valor = 200M };
+                Passagem passagem = new Passagem { Id = _guids[0], Origem = guid, Destino = Guid.NewGuid(), Cliente = Guid.NewGuid(), Data = DateTime.Now, Valor = 200M };
 
-                var retorno = controlador.PutPassagem(guid, passagem).Result.Value;
-                Assert.Equal(Guid.NewGuid(), retorno.Origem);
+                var retorno = controlador.PutPassagem(_guids[0], passagem).Result.Value;
+                Assert.Equal(guid, retorno.Origem);
             }
         }
 
@@ -95,7 +97,7 @@ namespace AndreTurismoAPIExterna.Teste
                 var contexto = new AndreTurismoAPIExternaPassagemServiceContext(opcoes);
                 PassagensController controlador = new PassagensController(contexto);
 
-                var retorno = controlador.DeletePassagem(Guid.NewGuid()).Result;
+                var retorno = controlador.DeletePassagem(_guids[1]).Result;
                 Assert.IsType<OkResult>(retorno);
             }
         }
