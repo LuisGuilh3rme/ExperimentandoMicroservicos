@@ -137,7 +137,7 @@ namespace AndreTurismoAPIExterna.EnderecoService.Controllers
 
         // DELETE: api/Enderecos/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEndereco(int id)
+        public async Task<IActionResult> DeleteEndereco(Guid id)
         {
             if (_context.Endereco == null)
             {

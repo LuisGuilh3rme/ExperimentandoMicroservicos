@@ -7,6 +7,7 @@ namespace AndreTurismoAPIExterna.Teste
     {
 
         private DbContextOptions<AndreTurismoAPIExternaEnderecoServiceContext> opcoes;
+        private List<Guid> _guids = new List<Guid>();
 
         private void InicializarBanco()
         {
@@ -20,9 +21,13 @@ namespace AndreTurismoAPIExterna.Teste
             {
                 var contexto = new AndreTurismoAPIExternaEnderecoServiceContext(opcoes);
 
-                contexto.Endereco.Add(new Endereco { Logradouro = "Rua 1", CEP = "123456789", Bairro = "Bairro 1", Complemento = "null", Cidade = new Cidade() { Nome = "Cidade1" } });
-                contexto.Endereco.Add(new Endereco { Logradouro = "Rua 2", CEP = "123456789", Bairro = "Bairro 2", Complemento = "null", Cidade = new Cidade() { Nome = "Cidade2" } });
-                contexto.Endereco.Add(new Endereco { Logradouro = "Rua 3", CEP = "123456789", Bairro = "Bairro 3", Complemento = "null", Cidade = new Cidade() { Nome = "Cidade3" } });
+                _guids.Add(Guid.NewGuid());
+                _guids.Add(Guid.NewGuid());
+                _guids.Add(Guid.NewGuid());
+
+                contexto.Endereco.Add(new Endereco { Id = _guids[0], Logradouro = "Rua 1", CEP = "123456789", Bairro = "Bairro 1", Complemento = "null", Cidade = new Cidade() { Nome = "Cidade1" } });
+                contexto.Endereco.Add(new Endereco { Id = _guids[1], Logradouro = "Rua 2", CEP = "123456789", Bairro = "Bairro 2", Complemento = "null", Cidade = new Cidade() { Nome = "Cidade2" } });
+                contexto.Endereco.Add(new Endereco { Id = _guids[2], Logradouro = "Rua 3", CEP = "123456789", Bairro = "Bairro 3", Complemento = "null", Cidade = new Cidade() { Nome = "Cidade3" } });
                 contexto.SaveChanges();
             }
         }
@@ -48,9 +53,10 @@ namespace AndreTurismoAPIExterna.Teste
             {
                 var contexto = new AndreTurismoAPIExternaEnderecoServiceContext(opcoes);
                 EnderecoController controlador = new EnderecoController(contexto);
-                Endereco endereco = controlador.GetEndereco(Guid.NewGuid()).Result.Value;
+                Endereco endereco = controlador.GetEndereco(_guids[1]).Result.Value;
                 Assert.Equal("Rua 2", endereco.Logradouro);
             }
+            _guids = new List<Guid>();
         }
 
         [Fact]
@@ -75,7 +81,7 @@ namespace AndreTurismoAPIExterna.Teste
             {
                 var contexto = new AndreTurismoAPIExternaEnderecoServiceContext(opcoes);
                 EnderecoController controlador = new EnderecoController(contexto);
-                Endereco endereco = new Endereco { Id = Guid.NewGuid(), CEP = "04961990", Numero = 5, Cidade = new Cidade() };
+                Endereco endereco = new Endereco { Id = _guids[2], CEP = "04961990", Numero = 5, Cidade = new Cidade() };
                 var retorno = controlador.PutEndereco(endereco.Id, endereco.Numero, endereco).Result.Value;
                 Assert.Equal(endereco.CEP, retorno.CEP);
             }
@@ -90,7 +96,7 @@ namespace AndreTurismoAPIExterna.Teste
                 var contexto = new AndreTurismoAPIExternaEnderecoServiceContext(opcoes);
                 EnderecoController controlador = new EnderecoController(contexto);
 
-                var retorno = controlador.DeleteEndereco(1).Result;
+                var retorno = controlador.DeleteEndereco(_guids[1]).Result;
                 Assert.IsType<OkResult>(retorno);
             }
         }
