@@ -30,11 +30,7 @@ namespace AndreTurismoAPIExterna.PacoteService.Controllers
             {
                 return NotFound();
             }
-            return await _context.Pacote
-                .Include(p => p.Hotel)
-                .Include(p => p.Passagem)
-                .Include(p => p.Cliente)
-                .ToListAsync();
+            return await _context.Pacote.ToListAsync();
         }
 
         // GET: api/Pacotes/5
@@ -45,13 +41,7 @@ namespace AndreTurismoAPIExterna.PacoteService.Controllers
             {
                 return NotFound();
             }
-            var pacote = await _context.Pacote
-                .Include(p => p.Hotel)
-                .Include(p => p.Passagem)
-                .Include(p => p.Passagem)
-                .Include(p => p.Passagem)
-                .Include(p => p.Cliente)
-                .Where(p => p.Id == id).FirstOrDefaultAsync();
+            var pacote = await _context.Pacote.FindAsync(id);
 
             if (pacote == null)
             {
@@ -70,15 +60,6 @@ namespace AndreTurismoAPIExterna.PacoteService.Controllers
             {
                 return BadRequest();
             }
-
-            _context.Update(pacote.Hotel);
-            await _context.SaveChangesAsync();
-
-            _context.Update(pacote.Passagem);
-            await _context.SaveChangesAsync();
-
-            _context.Update(pacote.Cliente);
-            await _context.SaveChangesAsync();
 
             _context.Entry(pacote).State = EntityState.Modified;
 

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AndreTurismoAPIExterna.EnderecoService.Migrations
 {
     [DbContext(typeof(AndreTurismoAPIExternaEnderecoServiceContext))]
-    [Migration("20230502225831_InitialCreate")]
+    [Migration("20230503130537_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -40,7 +40,7 @@ namespace AndreTurismoAPIExterna.ClienteService.Controllers
             {
                 return NotFound();
             }
-            var cliente = await _context.Cliente.FirstOrDefaultAsync();
+            var cliente = await _context.Cliente.FindAsync(id);
 
             if (cliente == null)
             {
@@ -60,7 +60,6 @@ namespace AndreTurismoAPIExterna.ClienteService.Controllers
                 return BadRequest();
             }
 
-            _context.Update(cliente.Endereco);
             _context.Entry<Cliente>(cliente).State = EntityState.Modified;
 
             try

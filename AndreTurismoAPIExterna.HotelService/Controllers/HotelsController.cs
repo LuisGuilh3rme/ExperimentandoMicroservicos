@@ -29,7 +29,7 @@ namespace AndreTurismoAPIExterna.HotelService.Controllers
             {
                 return NotFound();
             }
-            return await _context.Hotel.Include(h => h.Endereco).ToListAsync();
+            return await _context.Hotel.ToListAsync();
         }
 
         // GET: api/Hotels/5
@@ -40,7 +40,7 @@ namespace AndreTurismoAPIExterna.HotelService.Controllers
             {
                 return NotFound();
             }
-            var hotel = await _context.Hotel.Include(h => h.Endereco).Where(h => h.Id == id).FirstOrDefaultAsync();
+            var hotel = await _context.Hotel.FindAsync(id);
 
             if (hotel == null)
             {
@@ -60,7 +60,6 @@ namespace AndreTurismoAPIExterna.HotelService.Controllers
                 return BadRequest();
             }
 
-            _context.Update(hotel.Endereco);
             _context.Entry<Hotel>(hotel).State = EntityState.Modified;
 
             try

@@ -30,10 +30,7 @@ namespace AndreTurismoAPIExterna.PassagemService.Controllers
             {
                 return NotFound();
             }
-            return await _context.Passagem.Include(p => p.Origem)
-                .Include(p => p.Destino)
-                .Include(p => p.Cliente)
-                .ToListAsync();
+            return await _context.Passagem.ToListAsync();
         }
 
         // GET: api/Passagens/5
@@ -44,10 +41,7 @@ namespace AndreTurismoAPIExterna.PassagemService.Controllers
             {
                 return NotFound();
             }
-            Passagem? passagem = await _context.Passagem.Include(p => p.Origem)
-                .Include(p => p.Destino)
-                .Include(p => p.Cliente)
-                .Where(p => p.Id == id).FirstOrDefaultAsync();
+            Passagem? passagem = await _context.Passagem.FindAsync(id);
 
             if (passagem == null)
             {
@@ -67,9 +61,6 @@ namespace AndreTurismoAPIExterna.PassagemService.Controllers
                 return BadRequest();
             }
 
-            _context.Update(passagem.Origem);
-            _context.Update(passagem.Destino);
-            _context.Update(passagem.Cliente);
             _context.Entry(passagem).State = EntityState.Modified;
 
             try
@@ -102,8 +93,8 @@ namespace AndreTurismoAPIExterna.PassagemService.Controllers
             {
                 return Problem("Entity set 'AndreTurismoAPIExternaPassagemServiceContext.Passagem'  is null.");
             }
+
             _context.Passagem.Add(passagem);
-            await Console.Out.WriteLineAsync(passagem.ToJson());
             await _context.SaveChangesAsync();
 
             return passagem;

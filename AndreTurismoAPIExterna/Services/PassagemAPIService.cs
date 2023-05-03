@@ -43,8 +43,6 @@ namespace AndreTurismoAPIExterna.Services
 
         public async Task<HttpStatusCode> Atualizar(Guid id, Passagem passagem)
         {
-            passagem = RemoverIds(passagem);
-
             HttpContent httpContent = new StringContent(JsonConvert.SerializeObject(passagem), Encoding.UTF8, "application/JSON");
             HttpResponseMessage resposta = await cliente.PutAsync("https://localhost:5004/api/Passagens/" + id, httpContent);
             return resposta.StatusCode;
@@ -52,8 +50,6 @@ namespace AndreTurismoAPIExterna.Services
 
         public async Task<HttpStatusCode> Enviar(Passagem passagem)
         {
-            passagem = RemoverIds(passagem);
-
             HttpContent httpContent = new StringContent(JsonConvert.SerializeObject(passagem), Encoding.UTF8, "application/JSON");
             HttpResponseMessage resposta = await cliente.PostAsync("https://localhost:5004/api/Passagens/", httpContent);
             return resposta.StatusCode;
@@ -63,12 +59,6 @@ namespace AndreTurismoAPIExterna.Services
         {
             HttpResponseMessage resposta = await cliente.DeleteAsync("https://localhost:5004/api/Passagens/" + id);
             return resposta.StatusCode;
-        }
-
-        private Passagem RemoverIds(Passagem passagem)
-        {
-
-            return passagem;
         }
     }
 }

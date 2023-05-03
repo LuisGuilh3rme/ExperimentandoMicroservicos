@@ -6,6 +6,7 @@ using AndreTurismoAPIExterna.Services;
 using System.Net;
 using System.Runtime.ConstrainedExecution;
 using Microsoft.AspNetCore.Http.Features;
+using Newtonsoft.Json;
 
 namespace AndreTurismoAPIExterna.Controllers
 {
@@ -37,11 +38,28 @@ namespace AndreTurismoAPIExterna.Controllers
 
         // GET: api/Pacote
         [HttpGet("{id}")]
-        public ActionResult<Pacote> GetPacoteById(int id)
+        public ActionResult<string> GetPacoteById(Guid id)
         {
             Pacote pacote = _pacote.EncontrarPorId(id).Result;
             if (pacote == null) return NotFound();
-            return pacote;
+
+            Hotel hotel = _hotel.EncontrarPorId(pacote.Hotel).Result;
+            if (hotel == null) hotel = new Hotel();
+
+            Passagem passagem = _passagem.EncontrarPorId(pacote.Passagem).Result;
+            if (passagem == null) passagem = new Passagem();
+
+            Cliente cliente = _cliente.EncontrarPorId(pacote.Cliente).Result;
+            if (cliente == null) cliente = new Cliente();
+
+            return JsonConvert.SerializeObject(new
+            {
+                Hotel = hotel,
+                Passagem = passagem,
+                DataCadastro = pacote.DataCadastro,
+                Valor = pacote.Valor,
+                Cliente = cliente
+            });
         }
 
 
@@ -50,14 +68,10 @@ namespace AndreTurismoAPIExterna.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> PutPacote(Guid id, Pacote pacote)
         {
-            Passagem passagem = _passagem.EncontrarPorId(pacote.Passagem).Result;
-            if (passagem == null) return NotFound();
-
-            Hotel hotel = _hotel.EncontrarPorId(pacote.Hotel).Result;
-            if (hotel == null) return NotFound();
-
-            Cliente cliente = _cliente.EncontrarPorId(pacote.Cliente).Result;
-            if (cliente == null) return NotFound();
+            if (_pacote.EncontrarPorId(id).Result == null) return NotFound();
+            if (_passagem.EncontrarPorId(pacote.Passagem).Result == null) return NotFound();
+            if (_hotel.EncontrarPorId(pacote.Hotel).Result == null) return NotFound();
+            if (_cliente.EncontrarPorId(pacote.Cliente).Result == null) return NotFound();
 
             HttpStatusCode code = await _pacote.Atualizar(id, pacote);
             return StatusCode((int)code);

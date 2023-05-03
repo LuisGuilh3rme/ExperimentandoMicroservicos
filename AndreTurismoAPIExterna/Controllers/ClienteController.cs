@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using AndreTurismoAPIExterna.Services;
 using System.Net;
 using System.Runtime.ConstrainedExecution;
+using Newtonsoft.Json;
 
 namespace AndreTurismoAPIExterna.Controllers
 {
@@ -32,11 +33,21 @@ namespace AndreTurismoAPIExterna.Controllers
 
         // GET: api/Enderecos
         [HttpGet("{id}")]
-        public ActionResult<Cliente> GetClienteById(Guid id)
+        public ActionResult<string> GetClienteById(Guid id)
         {
             Cliente cliente = _cliente.EncontrarPorId(id).Result;
             if (cliente == null) return NotFound();
-            return cliente;
+
+            Endereco endereco = _endereco.EncontrarPorId(cliente.Endereco).Result; 
+            if (endereco == null) return NotFound();
+
+
+            return JsonConvert.SerializeObject(new {
+                Nome = cliente.Nome,
+                Telefone = cliente.Telefone,
+                Endereco = endereco,
+                DataCadastro = cliente.DataCadastro
+            });
         }
 
 
@@ -45,8 +56,8 @@ namespace AndreTurismoAPIExterna.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> PutCliente(Guid id, Cliente cliente)
         {
-            Endereco endereco = _endereco.EncontrarPorId(cliente.Endereco).Result;
-            if (endereco == null) return NotFound();
+            if (_cliente.EncontrarPorId(id).Result == null) return NotFound();
+            if (_endereco.EncontrarPorId(cliente.Endereco).Result == null) return NotFound();
 
             HttpStatusCode code = await _cliente.Atualizar(id, cliente);
             return StatusCode((int)code);

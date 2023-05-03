@@ -25,7 +25,7 @@ namespace AndreTurismoAPIExterna.Services
             }
         }
 
-        public async Task<Pacote> EncontrarPorId(int id)
+        public async Task<Pacote> EncontrarPorId(Guid id)
         {
             try
             {

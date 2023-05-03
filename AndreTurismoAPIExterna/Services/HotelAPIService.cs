@@ -43,8 +43,6 @@ namespace AndreTurismoAPIExterna.Services
 
         public async Task<HttpStatusCode> Atualizar(Guid id, Hotel hotel)
         {
-            hotel = RemoverIds(hotel);
-
             HttpContent httpContent = new StringContent(JsonConvert.SerializeObject(hotel), Encoding.UTF8, "application/JSON");
             HttpResponseMessage resposta = await cliente.PutAsync("https://localhost:5003/api/Hotels/" + id, httpContent);
             return resposta.StatusCode;
@@ -52,8 +50,6 @@ namespace AndreTurismoAPIExterna.Services
 
         public async Task<HttpStatusCode> Enviar(Hotel hotel)
         {
-            hotel = RemoverIds(hotel);
-
             HttpContent httpContent = new StringContent(JsonConvert.SerializeObject(hotel), Encoding.UTF8, "application/JSON");
             HttpResponseMessage resposta = await cliente.PostAsync("https://localhost:5003/api/Hotels/", httpContent);
             return resposta.StatusCode;
@@ -63,12 +59,6 @@ namespace AndreTurismoAPIExterna.Services
         {
             HttpResponseMessage resposta = await cliente.DeleteAsync("https://localhost:5003/api/Hotels/" + id);
             return resposta.StatusCode;
-        }
-
-        private Hotel RemoverIds (Hotel hotel)
-        {
-
-            return hotel;
         }
     }
 }
