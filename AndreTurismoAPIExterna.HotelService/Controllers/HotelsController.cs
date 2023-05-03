@@ -25,10 +25,10 @@ namespace AndreTurismoAPIExterna.HotelService.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Hotel>>> GetHotel()
         {
-          if (_context.Hotel == null)
-          {
-              return NotFound();
-          }
+            if (_context.Hotel == null)
+            {
+                return NotFound();
+            }
             return await _context.Hotel.Include(h => h.Endereco).ToListAsync();
         }
 
@@ -36,10 +36,10 @@ namespace AndreTurismoAPIExterna.HotelService.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Hotel>> GetHotel(Guid id)
         {
-          if (_context.Hotel == null)
-          {
-              return NotFound();
-          }
+            if (_context.Hotel == null)
+            {
+                return NotFound();
+            }
             var hotel = await _context.Hotel.Include(h => h.Endereco).Where(h => h.Id == id).FirstOrDefaultAsync();
 
             if (hotel == null)
@@ -87,10 +87,12 @@ namespace AndreTurismoAPIExterna.HotelService.Controllers
         [HttpPost]
         public async Task<ActionResult<Hotel>> PostHotel(Hotel hotel)
         {
-          if (_context.Hotel == null)
-          {
-              return Problem("Entity set 'AndreTurismoAPIExternaHotelServiceContext.Hotel'  is null.");
-          }
+            hotel.Id = Guid.NewGuid();
+
+            if (_context.Hotel == null)
+            {
+                return Problem("Entity set 'AndreTurismoAPIExternaHotelServiceContext.Hotel'  is null.");
+            }
             _context.Hotel.Add(hotel);
             await _context.SaveChangesAsync();
 

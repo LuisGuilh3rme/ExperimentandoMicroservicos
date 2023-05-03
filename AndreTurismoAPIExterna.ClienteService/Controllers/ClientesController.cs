@@ -29,7 +29,7 @@ namespace AndreTurismoAPIExterna.ClienteService.Controllers
             {
                 return NotFound();
             }
-            return await _context.Cliente.Include(c => c.Endereco).ToListAsync();
+            return await _context.Cliente.ToListAsync();
         }
 
         // GET: api/Clientes/5
@@ -40,7 +40,7 @@ namespace AndreTurismoAPIExterna.ClienteService.Controllers
             {
                 return NotFound();
             }
-            var cliente = await _context.Cliente.Include(c => c.Endereco).Where(c => c.Id == id).FirstOrDefaultAsync();
+            var cliente = await _context.Cliente.FirstOrDefaultAsync();
 
             if (cliente == null)
             {
@@ -87,6 +87,8 @@ namespace AndreTurismoAPIExterna.ClienteService.Controllers
         [HttpPost]
         public async Task<ActionResult<Cliente>> PostCliente(Cliente cliente)
         {
+            cliente.Id = Guid.NewGuid();
+
             if (_context.Cliente == null)
             {
                 return Problem("Entity set 'AndreTurismoAPIExternaClienteServiceContext.Cliente'  is null.");

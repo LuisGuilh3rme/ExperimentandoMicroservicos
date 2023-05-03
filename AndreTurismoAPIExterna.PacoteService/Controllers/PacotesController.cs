@@ -26,10 +26,10 @@ namespace AndreTurismoAPIExterna.PacoteService.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Pacote>>> GetPacote()
         {
-          if (_context.Pacote == null)
-          {
-              return NotFound();
-          }
+            if (_context.Pacote == null)
+            {
+                return NotFound();
+            }
             return await _context.Pacote
                 .Include(p => p.Hotel)
                 .Include(p => p.Passagem)
@@ -41,10 +41,10 @@ namespace AndreTurismoAPIExterna.PacoteService.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Pacote>> GetPacote(Guid id)
         {
-          if (_context.Pacote == null)
-          {
-              return NotFound();
-          }
+            if (_context.Pacote == null)
+            {
+                return NotFound();
+            }
             var pacote = await _context.Pacote
                 .Include(p => p.Hotel)
                 .Include(p => p.Passagem)
@@ -106,10 +106,12 @@ namespace AndreTurismoAPIExterna.PacoteService.Controllers
         [HttpPost]
         public async Task<ActionResult<Pacote>> PostPacote(Pacote pacote)
         {
-          if (_context.Pacote == null)
-          {
-              return Problem("Entity set 'AndreTurismoAPIExternaPacoteServiceContext.Pacote'  is null.");
-          }
+            pacote.Id = Guid.NewGuid();
+
+            if (_context.Pacote == null)
+            {
+                return Problem("Entity set 'AndreTurismoAPIExternaPacoteServiceContext.Pacote'  is null.");
+            }
             _context.Pacote.Add(pacote);
             await _context.SaveChangesAsync();
 

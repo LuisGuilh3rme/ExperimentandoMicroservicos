@@ -26,10 +26,10 @@ namespace AndreTurismoAPIExterna.PassagemService.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Passagem>>> GetPassagem()
         {
-          if (_context.Passagem == null)
-          {
-              return NotFound();
-          }
+            if (_context.Passagem == null)
+            {
+                return NotFound();
+            }
             return await _context.Passagem.Include(p => p.Origem)
                 .Include(p => p.Destino)
                 .Include(p => p.Cliente)
@@ -40,10 +40,10 @@ namespace AndreTurismoAPIExterna.PassagemService.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Passagem>> GetPassagem(Guid id)
         {
-          if (_context.Passagem == null)
-          {
-              return NotFound();
-          }
+            if (_context.Passagem == null)
+            {
+                return NotFound();
+            }
             Passagem? passagem = await _context.Passagem.Include(p => p.Origem)
                 .Include(p => p.Destino)
                 .Include(p => p.Cliente)
@@ -96,10 +96,12 @@ namespace AndreTurismoAPIExterna.PassagemService.Controllers
         [HttpPost]
         public async Task<ActionResult<Passagem>> PostPassagem(Passagem passagem)
         {
-          if (_context.Passagem == null)
-          {
-              return Problem("Entity set 'AndreTurismoAPIExternaPassagemServiceContext.Passagem'  is null.");
-          }
+            passagem.Id = Guid.NewGuid();
+
+            if (_context.Passagem == null)
+            {
+                return Problem("Entity set 'AndreTurismoAPIExternaPassagemServiceContext.Passagem'  is null.");
+            }
             _context.Passagem.Add(passagem);
             await Console.Out.WriteLineAsync(passagem.ToJson());
             await _context.SaveChangesAsync();

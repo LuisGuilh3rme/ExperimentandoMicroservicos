@@ -106,6 +106,7 @@ namespace AndreTurismoAPIExterna.EnderecoService.Controllers
         [HttpPost("{cep:length(8)}, {numero:int}")]
         public async Task<ActionResult<Endereco>> PostEndereco(string cep, int numero, Endereco endereco)
         {
+            endereco.Id = Guid.NewGuid();
             endereco.CEP = cep;
             endereco.Numero = numero;
 
