@@ -7,6 +7,7 @@ namespace AndreTurismoAPIExterna.Teste
     {
 
         private DbContextOptions<AndreTurismoAPIExternaPacoteServiceContext> opcoes;
+        private List<Guid> _guids = new List<Guid>();
 
         private void InicializarBanco()
         {
@@ -20,7 +21,8 @@ namespace AndreTurismoAPIExterna.Teste
             {
                 var contexto = new AndreTurismoAPIExternaPacoteServiceContext(opcoes);
 
-                contexto.Pacote.Add(new Pacote { Hotel = Guid.NewGuid(), Passagem = Guid.NewGuid(), DataCadastro = DateTime.Now, Valor = 1000.259M, Cliente = Guid.NewGuid() });
+                _guids.Add(Guid.NewGuid());
+                contexto.Pacote.Add(new Pacote { Id = _guids[0], Hotel = Guid.NewGuid(), Passagem = Guid.NewGuid(), DataCadastro = DateTime.Now, Valor = 1000.259M, Cliente = Guid.NewGuid() });
                 contexto.SaveChanges();
             }
         }
@@ -46,10 +48,8 @@ namespace AndreTurismoAPIExterna.Teste
             {
                 var contexto = new AndreTurismoAPIExternaPacoteServiceContext(opcoes);
                 PacotesController controlador = new PacotesController(contexto);
-                Pacote? pacote = controlador.GetPacote(Guid.NewGuid()).Result.Value;
+                Pacote? pacote = controlador.GetPacote(_guids[0]).Result.Value;
 
-                Assert.Equal(Guid.NewGuid(), pacote.Hotel);
-                Assert.Equal(Guid.NewGuid(), pacote.Passagem);
                 Assert.Equal(1000.259M, pacote.Valor);
             }
         }
@@ -63,10 +63,11 @@ namespace AndreTurismoAPIExterna.Teste
                 var contexto = new AndreTurismoAPIExternaPacoteServiceContext(opcoes);
                 PacotesController controlador = new PacotesController(contexto);
 
-                Pacote pacote = new Pacote { Hotel = Guid.NewGuid(), Passagem = Guid.NewGuid(), DataCadastro = DateTime.Now, Valor = 999.99M, Cliente = Guid.NewGuid() };
+                Guid guid = Guid.NewGuid();
+                Pacote pacote = new Pacote { Hotel = guid, Passagem = Guid.NewGuid(), DataCadastro = DateTime.Now, Valor = 999.99M, Cliente = Guid.NewGuid() };
 
                 Pacote? retorno = controlador.PostPacote(pacote).Result.Value;
-                Assert.Equal(Guid.NewGuid(), pacote.Hotel);
+                Assert.Equal(guid, retorno.Hotel);
             }
         }
 
@@ -80,11 +81,10 @@ namespace AndreTurismoAPIExterna.Teste
                 PacotesController controlador = new PacotesController(contexto);
 
                 Guid guid = Guid.NewGuid();
-                Pacote pacote = new Pacote { Id = guid, Hotel = Guid.NewGuid(), Passagem = Guid.NewGuid(), DataCadastro = DateTime.Now, Valor = 123.456M, Cliente = Guid.NewGuid() };
+                Pacote pacote = new Pacote { Id = _guids[0], Hotel = Guid.NewGuid(), Passagem = Guid.NewGuid(), DataCadastro = DateTime.Now, Valor = 123.456M, Cliente = guid };
 
-
-                var retorno = controlador.PutPacote(guid, pacote).Result.Value;
-                Assert.Equal(Guid.NewGuid(), retorno.Cliente);
+                var retorno = controlador.PutPacote(_guids[0], pacote).Result.Value;
+                Assert.Equal(guid, retorno.Cliente);
             }
         }
 
@@ -97,7 +97,7 @@ namespace AndreTurismoAPIExterna.Teste
                 var contexto = new AndreTurismoAPIExternaPacoteServiceContext(opcoes);
                 PacotesController controlador = new PacotesController(contexto);
 
-                var retorno = controlador.DeletePacote(Guid.NewGuid()).Result;
+                var retorno = controlador.DeletePacote(_guids[0]).Result;
                 Assert.IsType<OkResult>(retorno);
             }
         }
