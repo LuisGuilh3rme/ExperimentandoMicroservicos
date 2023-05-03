@@ -56,7 +56,6 @@ namespace AndreTurismoAPIExterna.Teste
                 Endereco endereco = controlador.GetEndereco(_guids[1]).Result.Value;
                 Assert.Equal("Rua 2", endereco.Logradouro);
             }
-            _guids = new List<Guid>();
         }
 
         [Fact]

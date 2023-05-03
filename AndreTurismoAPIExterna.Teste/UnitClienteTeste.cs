@@ -7,6 +7,7 @@ namespace AndreTurismoAPIExterna.Teste
     {
 
         private DbContextOptions<AndreTurismoAPIExternaClienteServiceContext> opcoes;
+        private List<Guid> _guids = new List<Guid>();
 
         private void InicializarBanco()
         {
@@ -20,8 +21,11 @@ namespace AndreTurismoAPIExterna.Teste
             {
                 var contexto = new AndreTurismoAPIExternaClienteServiceContext(opcoes);
 
-                contexto.Cliente.Add(new Cliente { Nome = "Lorem Ipsum", Telefone = "4002-8922", Endereco = Guid.NewGuid(), DataCadastro = DateTime.Now });
-                contexto.Cliente.Add(new Cliente { Nome = "Dolor Sit Amet", Telefone = "4002-8922", Endereco = Guid.NewGuid(), DataCadastro = DateTime.Now });
+                _guids.Add(Guid.NewGuid());
+                _guids.Add(Guid.NewGuid());
+
+                contexto.Cliente.Add(new Cliente { Id = _guids[0], Nome = "Lorem Ipsum", Telefone = "4002-8922", Endereco = Guid.NewGuid(), DataCadastro = DateTime.Now });
+                contexto.Cliente.Add(new Cliente { Id = _guids[1], Nome = "Dolor Sit Amet", Telefone = "4002-8922", Endereco = Guid.NewGuid(), DataCadastro = DateTime.Now });
                 contexto.SaveChanges();
             }
         }
@@ -47,9 +51,8 @@ namespace AndreTurismoAPIExterna.Teste
             {
                 var contexto = new AndreTurismoAPIExternaClienteServiceContext(opcoes);
                 ClientesController controlador = new ClientesController(contexto);
-                Cliente cliente = controlador.GetCliente(Guid.NewGuid()).Result.Value;
+                Cliente cliente = controlador.GetCliente(_guids[1]).Result.Value;
                 Assert.Equal("Dolor Sit Amet", cliente.Nome);
-                Assert.Equal(Guid.NewGuid(), cliente.Endereco);
             }
         }
 
@@ -78,10 +81,9 @@ namespace AndreTurismoAPIExterna.Teste
                 var contexto = new AndreTurismoAPIExternaClienteServiceContext(opcoes);
                 ClientesController controlador = new ClientesController(contexto);
 
-                Guid guid = Guid.NewGuid();
-                Cliente cliente = new Cliente { Id = guid, Nome = "Guilherme", Telefone = "4002-8922", Endereco = Guid.NewGuid(), DataCadastro = DateTime.Now };
+                Cliente cliente = new Cliente { Id = _guids[1], Nome = "Guilherme", Telefone = "4002-8922", Endereco = Guid.NewGuid(), DataCadastro = DateTime.Now };
 
-                var retorno = controlador.PutCliente(guid, cliente).Result.Value;
+                var retorno = controlador.PutCliente(_guids[1], cliente).Result.Value;
                 Assert.Equal("Guilherme", retorno.Nome);
             }
         }
@@ -95,7 +97,7 @@ namespace AndreTurismoAPIExterna.Teste
                 var contexto = new AndreTurismoAPIExternaClienteServiceContext(opcoes);
                 ClientesController controlador = new ClientesController(contexto);
 
-                var retorno = controlador.DeleteCliente(Guid.NewGuid()).Result;
+                var retorno = controlador.DeleteCliente(_guids[0]).Result;
                 Assert.IsType<OkResult>(retorno);
             }
         }
