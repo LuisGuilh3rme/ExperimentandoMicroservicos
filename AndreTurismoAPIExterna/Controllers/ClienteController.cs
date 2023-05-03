@@ -47,7 +47,7 @@ namespace AndreTurismoAPIExterna.Controllers
                 Telefone = cliente.Telefone,
                 Endereco = endereco,
                 DataCadastro = cliente.DataCadastro
-            });
+            }, Formatting.Indented);
         }
 
 

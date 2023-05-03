@@ -47,7 +47,7 @@ namespace AndreTurismoAPIExterna.Controllers
                 Endereco = endereco,
                 DataCadastro = hotel.DataCadastro,
                 Valor = hotel.Valor
-            });
+            }, Formatting.Indented);
         }
 
 

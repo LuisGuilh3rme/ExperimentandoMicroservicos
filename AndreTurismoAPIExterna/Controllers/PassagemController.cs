@@ -57,7 +57,7 @@ namespace AndreTurismoAPIExterna.Controllers
                 Cliente = cliente,
                 DataViagem = passagem.Data,
                 Valor = passagem.Valor
-            });
+            }, Formatting.Indented);
         }
 
 

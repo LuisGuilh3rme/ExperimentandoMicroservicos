@@ -59,7 +59,7 @@ namespace AndreTurismoAPIExterna.Controllers
                 DataCadastro = pacote.DataCadastro,
                 Valor = pacote.Valor,
                 Cliente = cliente
-            });
+            }, Formatting.Indented);
         }
 
 
