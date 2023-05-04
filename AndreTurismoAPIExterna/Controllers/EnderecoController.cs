@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using AndreTurismoAPIExterna.Services;
 using System.Net;
 using System.Runtime.ConstrainedExecution;
+using RabbitMQ.Client;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace AndreTurismoAPIExterna.Controllers
 {
@@ -14,10 +17,13 @@ namespace AndreTurismoAPIExterna.Controllers
     {
 
         private static EnderecoAPIService _endereco;
+        private static ConnectionFactory _factory;
+        private const string QUEUE_NAME = "Endereco";
 
-        public EnderecoController(EnderecoAPIService enderecoAPI)
+        public EnderecoController(ConnectionFactory factory, EnderecoAPIService enderecoAPI)
         {
             _endereco = enderecoAPI;
+            _factory = factory;
         }
 
 
@@ -54,11 +60,37 @@ namespace AndreTurismoAPIExterna.Controllers
         [HttpPost("{cep:length(8)}, {numero:int}")]
         public async Task<ActionResult> PostEndereco(string cep, int numero, Endereco endereco)
         {
-            HttpStatusCode code = await _endereco.Enviar(cep, numero, endereco);
-            return StatusCode((int)code);
+            endereco.CEP = cep;
+            endereco.Numero = numero;
+
+            using (var connection = _factory.CreateConnection())
+            {
+                using (var channel = connection.CreateModel())
+                {
+
+                    channel.QueueDeclare(
+                        queue: QUEUE_NAME,
+                        durable: false,
+                        exclusive: false,
+                        autoDelete: false,
+                        arguments: null
+                        );
+
+                    var stringfieldMessage = JsonConvert.SerializeObject(endereco);
+                    var bytesMessage = Encoding.UTF8.GetBytes(stringfieldMessage);
+
+                    channel.BasicPublish(
+                        exchange: "",
+                        routingKey: QUEUE_NAME,
+                        basicProperties: null,
+                        body: bytesMessage
+                        );
+                }
+            }
+            return Accepted();
         }
-        
-        
+    
+
         // DELETE: api/Enderecos/5
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteEndereco(Guid id)

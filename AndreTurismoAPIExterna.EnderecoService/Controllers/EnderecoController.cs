@@ -1,5 +1,4 @@
-﻿using System.Runtime.ConstrainedExecution;
-using AndreTurismoAPIExterna.EnderecoService.Data;
+﻿using AndreTurismoAPIExterna.EnderecoService.Data;
 using AndreTurismoAPIExterna.EnderecoService.Services;
 using AndreTurismoAPIExterna.Models;
 using AndreTurismoAPIExterna.Models.DTO;
@@ -13,6 +12,7 @@ namespace AndreTurismoAPIExterna.EnderecoService.Controllers
     public class EnderecoController : ControllerBase
     {
         private readonly AndreTurismoAPIExternaEnderecoServiceContext _context;
+        private const string QUEUE_NAME = "Endereco";
 
         public EnderecoController(AndreTurismoAPIExternaEnderecoServiceContext context)
         {
@@ -121,7 +121,7 @@ namespace AndreTurismoAPIExterna.EnderecoService.Controllers
             endereco.Logradouro = enderecoDTO.Logradouro;
             endereco.Complemento = enderecoDTO.Complemento;
             endereco.DataCadastro = DateTime.Now;
-
+            
             Cidade cidade = _context.Cidade.Where(c => c.Nome == enderecoDTO.Cidade).FirstOrDefaultAsync().Result;
             if (cidade == null)
             {
@@ -133,6 +133,7 @@ namespace AndreTurismoAPIExterna.EnderecoService.Controllers
             _context.Endereco.Add(endereco);
             await _context.SaveChangesAsync();
             return endereco;
+            
         }
 
         // DELETE: api/Enderecos/5

@@ -1,7 +1,12 @@
+using AndreTurismoAPIExterna.Data;
 using AndreTurismoAPIExterna.Services;
+using RabbitMQ.Client;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.AddDbContext<AndreTurismoAPIExternaContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("AndreTurismoAPIExternaContext") ?? throw new InvalidOperationException("Connection string 'AndreTurismoAPIExternaContext' not found.")));
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -14,6 +19,7 @@ builder.Services.AddSingleton<ClienteAPIService>();
 builder.Services.AddSingleton<HotelAPIService>();
 builder.Services.AddSingleton<PassagemAPIService>();
 builder.Services.AddSingleton<PacoteAPIService>();
+builder.Services.AddSingleton<ConnectionFactory>();
 
 var app = builder.Build();
 

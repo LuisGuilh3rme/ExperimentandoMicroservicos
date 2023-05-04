@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Global", "Global", "{3A569D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microservicos", "Microservicos", "{5E8211D5-981F-42BE-B053-D10C874A4309}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AndreTurismoAPIExterna.Consumer", "AndreTurismoAPIExterna.Consumer\AndreTurismoAPIExterna.Consumer.csproj", "{22BA0602-5003-4CD9-9176-561D5E256D52}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,10 @@ Global
 		{5D9F68CA-6EE0-4B8E-A8FE-B5C6404ACEC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D9F68CA-6EE0-4B8E-A8FE-B5C6404ACEC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D9F68CA-6EE0-4B8E-A8FE-B5C6404ACEC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22BA0602-5003-4CD9-9176-561D5E256D52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22BA0602-5003-4CD9-9176-561D5E256D52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22BA0602-5003-4CD9-9176-561D5E256D52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22BA0602-5003-4CD9-9176-561D5E256D52}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -73,6 +79,7 @@ Global
 		{5330393C-14FD-4479-BE62-C695A5D8F0C9} = {5E8211D5-981F-42BE-B053-D10C874A4309}
 		{4BA14C4F-D661-45A5-B36E-039DD2CB0EC1} = {5E8211D5-981F-42BE-B053-D10C874A4309}
 		{07C751D6-CDDE-490C-A01B-AE6B15A536CC} = {5E8211D5-981F-42BE-B053-D10C874A4309}
+		{22BA0602-5003-4CD9-9176-561D5E256D52} = {3A569D79-278F-49AD-A63A-200C0EE07470}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5B27CA28-30C9-4A6F-88F2-9F4DF082242E}

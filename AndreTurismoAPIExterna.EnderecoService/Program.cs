@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using AndreTurismoAPIExterna.EnderecoService.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AndreTurismoAPIExternaEnderecoServiceContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("AndreTurismoAPIExternaEnderecoServiceContext") ?? throw new InvalidOperationException("Connection string 'AndreTurismoAPIExternaEnderecoServiceContext' not found.")));
